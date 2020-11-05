@@ -10,6 +10,8 @@ import ErrorPage from './components/ErrorPage';
 import ManageAccountPage from './components/UserPageComponents/NonAdminPageComponents/ManageAccountPage';
 import MyAuctions from './components/UserPageComponents/NonAdminPageComponents/MyAuctionsComponents/MyAuctions';
 import MyBids from './components/UserPageComponents/NonAdminPageComponents/MyBidsComponents/MyBids';
+import ListAuction from './components/UserPageComponents/NonAdminPageComponents/MyAuctionsComponents/ListAuction';
+import UpdateAuction from './components/UserPageComponents/NonAdminPageComponents/MyAuctionsComponents/UpdateAuction';
 
 function App() {
   return (
@@ -30,7 +32,12 @@ function App() {
 
         <Route exact path="/manageaccount/:userid" component={ManageAccountPage} />
         <Route exact path="/myauctions/:userid" component={MyAuctions} />
+        <Route exact path="/myauctions/fail/:userid" render={ (props) => <ErrorPage {...props} errorMessage="Your auctions failed to load due to some reasons..." route="/user/nonadmin/" buttonName="Return to user page" /> } />
         <Route exact path="/mybids/:userid" component={MyBids} />
+
+        <Route exact path="/listauction/:userid" component={ListAuction} />
+        <Route exact path="/updateauction/:userid/:auctionid" component={UpdateAuction} />
+        <Route exact path="/updateauctionfail/:userid" render={ (props) => <ErrorPage {...props} errorMessage="Your auction failed to load due to some reasons..." route="/myauctions/" buttonName="Return to myAuctions page" /> } />
       </div>
     </Router>
   );

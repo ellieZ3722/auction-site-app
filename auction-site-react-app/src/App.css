@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.auction-row {
+  margin: auto;
+  display: flex;
+  width: 70%;
+  height: 60px;
+}
+
+.auction-cell {
+  width: 16.666666667%;
+  padding: 15px;
+}

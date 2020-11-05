@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class ManageAccountPage extends Component {
     constructor(props) {
@@ -10,6 +11,11 @@ class ManageAccountPage extends Component {
             password: "",
             isSuspended: false
         }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.onSuspendClick = this.onSuspendClick.bind(this);
+        this.onUpdateSubmit = this.onUpdateSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -26,28 +32,40 @@ class ManageAccountPage extends Component {
                 })
             },
             (error) => {
-                    
+                // window.location.href = "/user/fail";
+                this.setState({
+                    username: "qieer",
+                    email: "@",
+                    isSuspended: true
+                })
             }
         )
     }
 
     onSuspendClick() {
-        // bug to be fixed
-        if (this.state.isSuspended) {
-            alert("Your account has already been suspended.")
-        } else {
-            const suspendUrl = "";
-            fetch(suspendUrl)
-            .then(res => res.json())
-            .then(
-                (result) => {
+        const suspendUrl = "";
+
+        fetch(suspendUrl)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                if (this.state.isSuspended) {
+                    alert("Your account has been unsuspended successfully.")
+                } else {
                     alert("Your account has been suspended successfully.")
-                },
-                (error) => {
+                }
+                this.setState({
+                    isSuspended: !this.state.isSuspended
+                })
+            },
+            (error) => {
+                if (this.state.isSuspended) {
+                    alert("An error occured when attempted to unsuspend your account...")
+                } else {
                     alert("An error occured when attempted to suspend your account...")
                 }
-            )
-        }
+            }
+        )
     }
 
     onDeleteClick() {
@@ -91,30 +109,51 @@ class ManageAccountPage extends Component {
     }
 
     render() {
+        let body;
+
+        if (this.state.username !== "") {
+            body = (
+                <div>
+                    <Link to={`/user/nonadmin/` + this.state.userId}>
+                        <button>back to user page</button>
+                    </Link>
+                    <div>
+                        <div>Update Account Information:</div>
+                        <form onSubmit={this.onUpdateSubmit}>
+                            <div>
+                                <span>Username: </span>
+                                <input type="text" name="username" onChange={(e) => this.handleChange(e)}></input>
+                            </div>
+                            <div>
+                                <span>Email: </span>
+                                <input type="text" name="email" onChange={(e) => this.handleChange(e)}></input>
+                            </div>
+                            <div>
+                                <span>Password: </span>
+                                <input type="text" name="password" onChange={(e) => this.handleChange(e)}></input>
+                            </div>
+                            <input type="submit" value="Update"></input>
+                        </form>
+                    </div>
+                    <div>
+                        <button onClick={this.onSuspendClick}>{ this.state.isSuspended ? `Unsuspend Account` : `Suspend Account`}</button>
+                    </div>
+                    <div>
+                        <button onClick={this.onDeleteClick}>Delete Account</button>
+                    </div>
+                </div>
+            )
+        } else {
+            body = (
+                <div>
+                    <p>Your contents are being loaded...</p>
+                </div>
+            )
+        }
+
         return (
             <div>
-                <p>Update Account Information:</p>
-                <form onSubmit={this.onUpdateSubmit}>
-                    <div>
-                        <span>Username: </span>
-                        <input type="text" name="username" onChange={(e) => this.handleChange(e)}></input>
-                    </div>
-                    <div>
-                        <span>Email: </span>
-                        <input type="text" name="email" onChange={(e) => this.handleChange(e)}></input>
-                    </div>
-                    <div>
-                        <span>Password: </span>
-                        <input type="text" name="password" onChange={(e) => this.handleChange(e)}></input>
-                    </div>
-                    <input type="submit" value="Update"></input>
-                </form>
-                <div>
-                    <button onClick={this.onSuspendClick}>Suspend Account</button>
-                </div>
-                <div>
-                    <button onClick={this.onDeleteClick}>Delete Account</button>
-                </div>
+                {body}
             </div>
         );
     }

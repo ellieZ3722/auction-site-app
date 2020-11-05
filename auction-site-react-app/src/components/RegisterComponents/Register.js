@@ -30,7 +30,6 @@ class Register extends Component {
         console.log("password", this.state.password)
 
         const url = "";
-
         fetch(url)
         .then(res => res.json())
         .then(
