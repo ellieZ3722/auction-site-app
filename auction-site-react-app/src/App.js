@@ -33,7 +33,9 @@ function App() {
         <Route exact path="/manageaccount/:userid" component={ManageAccountPage} />
         <Route exact path="/myauctions/:userid" component={MyAuctions} />
         <Route exact path="/myauctions/fail/:userid" render={ (props) => <ErrorPage {...props} errorMessage="Your auctions failed to load due to some reasons..." route="/user/nonadmin/" buttonName="Return to user page" /> } />
+        
         <Route exact path="/mybids/:userid" component={MyBids} />
+        <Route exact path="/mybids/fail/:userid" render={ (props) => <ErrorPage {...props} errorMessage="Your bids failed to load due to some reasons..." route="/user/nonadmin/" buttonName="Return to user page" /> } />
 
         <Route exact path="/listauction/:userid" component={ListAuction} />
         <Route exact path="/updateauction/:userid/:auctionid" component={UpdateAuction} />

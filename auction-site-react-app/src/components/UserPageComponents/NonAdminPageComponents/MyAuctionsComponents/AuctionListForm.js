@@ -7,7 +7,7 @@ class AuctionListForm extends Component {
 
         this.state = {
             userId: props.userId,
-            // auctionList: props.auctionList
+            // auctionList: props.auctionList 
             auctionList: [
                 {   
                     auctionId: "1234",
@@ -19,7 +19,9 @@ class AuctionListForm extends Component {
                     shippingCosts: "$12",
                     buyNow: false,
                     itemDescription: "Description...",
-                    sellerRating: "A"
+                    sellerRating: "A",
+                    status: "Started",
+                    categories: ["cat1", "cat2", "cat3"]
                 },
                 {
                     auctionId: "1235",
@@ -31,7 +33,9 @@ class AuctionListForm extends Component {
                     shippingCosts: "$12",
                     buyNow: true,
                     itemDescription: "Description...",
-                    sellerRating: "A"
+                    sellerRating: "A",
+                    status: "Not Started",
+                    categories: ["cat1", "cat2", "cat3"]
                 },
                 {
                     auctionId: "1236",
@@ -43,7 +47,9 @@ class AuctionListForm extends Component {
                     shippingCosts: "$12",
                     buyNow: false,
                     itemDescription: "Description...",
-                    sellerRating: "A"
+                    sellerRating: "A",
+                    status: "Closed",
+                    categories: ["cat1", "cat2", "cat3"]
                 },
                 {
                     auctionId: "1237",
@@ -55,7 +61,9 @@ class AuctionListForm extends Component {
                     shippingCosts: "$12",
                     buyNow: false,
                     itemDescription: "Description...",
-                    sellerRating: "A"
+                    sellerRating: "A",
+                    status: "Cancelled",
+                    categories: ["cat1", "cat2", "cat3"]
                 },
                 {
                     auctionId: "1238",
@@ -67,7 +75,9 @@ class AuctionListForm extends Component {
                     shippingCosts: "$12",
                     buyNow: false,
                     itemDescription: "Description...",
-                    sellerRating: "A"
+                    sellerRating: "A",
+                    status: "Cancelled",
+                    categories: ["cat1", "cat2", "cat3"]
                 }
             ]
         }
@@ -76,7 +86,6 @@ class AuctionListForm extends Component {
     }
 
     updateAuction(auctionId) {
-        console.log(11111111)
         window.location.href = "/updateAuction/" + this.state.userId + "/" + auctionId;
     }
 
@@ -92,10 +101,12 @@ class AuctionListForm extends Component {
             <div>
                 <div className="auction-row">
                     <div className="auction-cell">Item Name</div>
+                    <div className="auction-cell">Categories</div>
                     <div className="auction-cell">Start Price</div>
                     <div className="auction-cell">Start Time</div>
-                    <div className="auction-cell">Quantity</div>
                     <div className="auction-cell">Expire Time</div>
+                    <div className="auction-cell">Status</div>
+                    <div className="auction-cell">Quantity</div>
                     <div className="auction-cell">Shipping Cost</div>
                     <div className="auction-cell">Buynow</div>
                     <div className="auction-cell">Item Description</div>

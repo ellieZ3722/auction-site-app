@@ -14,13 +14,13 @@ class NonAdminPage extends Component {
 
     componentDidMount() {
         const userIdentityUrl = "";
+
         fetch(userIdentityUrl)
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     username: result.username,
-                    userId: result.userId,
                     isSuspended: result.isSuspended
                 });
             },

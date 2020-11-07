@@ -41,7 +41,20 @@ class UpdateAuction extends Component {
                 })
             },
             (error) => {
-                window.location.href = "/updateauctionfail/" + this.state.userId;
+                // window.location.href = "/updateauctionfail/" + this.state.userId;
+                this.setState({
+                    auctionId: "1236",
+                    itemName: "item3",
+                    startPrice: 0,
+                    startTime: "7/8/2020",
+                    quantity: 1,
+                    timeExpire: "8/8/2020",
+                    shippingCosts: "$12",
+                    buyNow: false,
+                    itemDescription: "Description...",
+                    sellerRating: "A",
+                    status: "Closed"
+                })
             }
         )
     }
@@ -70,6 +83,24 @@ class UpdateAuction extends Component {
             },
             (error) => {
                 alert("An error occurred when attempted to update the auction...");
+            }
+        )
+    }
+
+    cancelAuction(e) {
+        e.preventDefault();
+
+        const cancelUrl = "";
+
+        fetch(cancelUrl)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                alert("This auction has been cancelled.");
+                window.location.href = "/myauction/" + this.state.userId;
+            },
+            (error) => {
+                alert("An error occured when attempted to cancel the auction...");
             }
         )
     }
@@ -105,7 +136,7 @@ class UpdateAuction extends Component {
                         </div>
                         <div>
                             <span>Shipping Cost: </span>
-                            <input type="text" name="shippingCost" onChange={e => this.onChange(e)}></input>
+                            <input type="text" name="shippingCost" value={this.state.shippingCosts} onChange={e => this.onChange(e)}></input>
                         </div>
                         <div>
                             <span>Buynow Option: </span>
@@ -116,13 +147,10 @@ class UpdateAuction extends Component {
                             <input type="text" name="itemDescription" value={this.state.itemDescription} onChange={e => this.onChange(e)}></input>
                         </div>
                         <div>
-                            <span>Seller Rating: </span>
-                            <input type="text" name="sellerRating" value={this.state.sellerRating} onChange={e => this.onChange(e)}></input>
-                        </div>
-                        <div>
-                            <input type ="submit" value="List"></input>
+                            <input type ="submit" value="Update"></input>
                         </div>
                     </form>
+                    <button onClick={e => this.cancelAuction(e)}>Cancel the auction</button>
                 </div>
             )
         } else {

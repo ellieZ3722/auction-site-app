@@ -15,13 +15,18 @@ class ListAuction extends Component {
             shippingCosts: "",
             buyNow: false,
             itemDescription: "",
-            sellerRating: ""
+            sellerRating: "",
+            categories: []
         }
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onCategoryAdd = this.onCategoryAdd.bind(this);
     }
 
     onChange(e) {
+        e.preventDefault();
+
         const target = e.target;
         const value = target.value;
         const name = target.name;
@@ -31,8 +36,28 @@ class ListAuction extends Component {
         })
     }
 
+    onCategoryAdd(e) {
+        e.preventDefault();
+
+        const target = e.target;
+        const value = target.value;
+
+        var categories = value.split(",");
+        var cat_list = [];
+        for (var i = 0; i < categories.length; i++) {
+            var category = categories[i].trim();
+            cat_list.push(category);
+        }
+
+        this.setState({
+            categories: cat_list
+        })
+    }
+
     onSubmit(e) {
         e.preventDefault()
+
+        // check if the start time is later than the current time
 
         const url = "";
 
@@ -92,6 +117,10 @@ class ListAuction extends Component {
                     <div>
                         <span>Seller Rating: </span>
                         <input type="text" name="sellerRating" onChange={e => this.onChange(e)}></input>
+                    </div>
+                    <div>
+                        <span>Categories (separate by comma if you have multiple categories):</span>
+                        <input type="text" name="category" onChange={e => this.onCategoryAdd(e)}></input>
                     </div>
                     <div>
                         <input type ="submit" value="List"></input>

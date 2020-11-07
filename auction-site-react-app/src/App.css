@@ -48,3 +48,31 @@
   width: 16.666666667%;
   padding: 15px;
 }
+
+.bid-row {
+  margin: auto;
+  display: flex;
+  width: 70%;
+  height: 60px;
+}
+
+.bid-cell {
+  width: 25%;
+  padding: 15px;
+}
+
+.new-bid-cell {
+  display: flex;
+}
+
+.user-row {
+  margin: auto;
+  display: flex;
+  width: 70%;
+  height: 60px;
+}
+
+.user-cell {
+  width: 20%;
+  padding: 15px;
+}

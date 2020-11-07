@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import AuctionListForm from "./AuctionListForm";
 import CategoriesListForm from "./CategoriesListForm";
 import UserListForm from "./UserListForm";
 import FlaggedItemListForm from "./FlaggedItemListForm"
 import CustomerSupportEmailListForm from "./CustomerSupportEmailListForm";
+import AuctionManagement from "./AuctionManagement/AuctionManagement";
 
 class AdminPage extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class AdminPage extends Component {
                 subbody = <UserListForm userId={this.state.userId}></UserListForm>;
                 break;
             case 2:
-                subbody = <AuctionListForm userId={this.state.userId}></AuctionListForm>;
+                subbody = <AuctionManagement userId={this.state.userId}></AuctionManagement>;
                 break;
             case 3:
                 subbody = <FlaggedItemListForm userId={this.state.userId}></FlaggedItemListForm>;

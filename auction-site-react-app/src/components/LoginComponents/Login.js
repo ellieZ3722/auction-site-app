@@ -24,15 +24,13 @@ class Login extends Component {
     handleSubmit(e) {
         e.preventDefault()
 
-        console.log("email", this.state.email)
-        console.log("password", this.state.password)
-
         const url = "";
 
         fetch(url)
         .then(res => res.json())
         .then(
             (result) => {
+                // returns userid and usertype
                 // if a normal user
                 window.location.href = "/user/admin/12345";
 
@@ -41,7 +39,7 @@ class Login extends Component {
             },
             (error) => {
                 // window.location.href = "/login/fail";
-                window.location.href = "/user/nonadmin/12345";
+                window.location.href = "/user/admin/12345";
             }
         )
     }

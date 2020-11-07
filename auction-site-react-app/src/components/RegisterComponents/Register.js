@@ -25,10 +25,6 @@ class Register extends Component {
     handleSubmit(e) {
         e.preventDefault()
 
-        console.log("username", this.state.username)
-        console.log("email", this.state.email)
-        console.log("password", this.state.password)
-
         const url = "";
         fetch(url)
         .then(res => res.json())
