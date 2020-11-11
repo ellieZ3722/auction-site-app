@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import CategoriesListForm from "./CategoriesListForm";
+import CategoriesListForm from "./CategoryManagement/CategoriesListForm";
 import UserListForm from "./UserListForm";
 import FlaggedItemListForm from "./FlaggedItemListForm"
-import CustomerSupportEmailListForm from "./CustomerSupportEmailListForm";
+import CustomerSupportEmailListForm from "./CustomerSupportManagement/CustomerSupportEmailListForm";
 import AuctionManagement from "./AuctionManagement/AuctionManagement";
 
 class AdminPage extends Component {

@@ -10,7 +10,7 @@ class ClosedAuctionListForm extends Component {
     }
 
     checkMetrics(auctionId) {
-
+        // popover window
     }
 
     render() {

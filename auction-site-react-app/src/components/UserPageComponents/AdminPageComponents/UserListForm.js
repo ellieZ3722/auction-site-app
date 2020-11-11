@@ -32,22 +32,26 @@ class UserListForm extends Component {
                         {
                             userId: "34535",
                             username: "user1",
-                            email: "@"
+                            email: "@",
+                            isSuspended: true
                         },
                         {
                             userId: "34535",
                             username: "user2",
-                            email: "@"
+                            email: "@",
+                            isSuspended: false
                         },
                         {
                             userId: "34535",
                             username: "user3",
-                            email: "@"
+                            email: "@",
+                            isSuspended: false
                         },
                         {
                             userId: "34535",
                             username: "user4",
-                            email: "@"
+                            email: "@",
+                            isSuspended: false
                         },
                     ]
                 })
@@ -55,21 +59,56 @@ class UserListForm extends Component {
         )
     }
 
-    suspend(userId) {}
+    suspend(isSuspend, userId) {
+        const url = "";
 
-    remove(userId) {}
+        fetch(url)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                if (isSuspend) {
+                    alert("The user has been unsuspended.")
+                } else {
+                    alert("The user has been suspended.")
+                }
+            },
+            (error) => {
+                if (isSuspend) {
+                    alert("An error occured when attempted to unsuspend the user.")
+                } else {
+                    alert("An error occured when attempted to suspend the user.")
+                }
+            }
+        )
+    }
+
+    remove(userId) {
+        const url = "";
+
+        fetch(url)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                alert("The user has been removed.");
+                window.location.reload(); 
+            },
+            (error) => {
+                alert("An error occured when attempted to remove the user.");
+            }
+        )
+    }
 
     render() {
         let body;
         if (this.state.userListFetchStatus === "success") {
-            body = this.state.userList.map(entry => {
+            let form = this.state.userList.map(entry => {
                 return (
                     <div className="user-row">
                         <div className="user-cell">{entry.userId}</div>
                         <div className="user-cell">{entry.username}</div>
                         <div className="user-cell">{entry.email}</div>
                         <div className="user-cell">
-                            <button onClick={() => this.suspend(entry.userId)}>Suspend</button>
+                            <button onClick={() => this.suspend(entry.isSuspended, entry.userId)}>{entry.isSuspended ? "Unsuspend" : "Suspend"}</button>
                         </div>
                         <div className="user-cell">
                             <button onClick={() => this.remove(entry.userId)}>Remove</button>
@@ -77,6 +116,22 @@ class UserListForm extends Component {
                     </div>
                 )
             })
+            body = (
+                <div>
+                    <div className="user-row">
+                        <div className="user-cell">User ID</div>
+                        <div className="user-cell">Username</div>
+                        <div className="user-cell">Email</div>
+                        <div className="user-cell">
+                            Suspend
+                        </div>
+                        <div className="user-cell">
+                            Remove
+                        </div>
+                    </div>
+                    {form}
+                </div>
+            )
         } else if (this.state.userListFetchStatus === "fail") {
             body = (
                 <div>
@@ -93,17 +148,6 @@ class UserListForm extends Component {
 
         return (
             <div>
-                <div className="user-row">
-                    <div className="user-cell">User ID</div>
-                    <div className="user-cell">Username</div>
-                    <div className="user-cell">Email</div>
-                    <div className="user-cell">
-                        Suspend
-                    </div>
-                    <div className="user-cell">
-                        Remove
-                    </div>
-                </div>
                 {body}
             </div>
         );
