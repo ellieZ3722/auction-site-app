@@ -12,7 +12,7 @@ import MyAuctions from './components/UserPageComponents/NonAdminPageComponents/M
 import MyBids from './components/UserPageComponents/NonAdminPageComponents/MyBidsComponents/MyBids';
 import ListAuction from './components/UserPageComponents/NonAdminPageComponents/MyAuctionsComponents/ListAuction';
 import UpdateAuction from './components/UserPageComponents/NonAdminPageComponents/MyAuctionsComponents/UpdateAuction';
-import Watchlist from './components/WatchlistComponents/Watchlist';
+import Watchlist from './components/UserPageComponents/NonAdminPageComponents/WatchlistComponents/Watchlist';
 
 function App() {
   return (
