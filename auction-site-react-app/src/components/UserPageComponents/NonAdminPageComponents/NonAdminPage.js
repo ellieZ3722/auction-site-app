@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import SearchResultList from "../../SearchComponents/SearchResultList";
+import Popup from "./Popup";
 
 class NonAdminPage extends Component {
     constructor(props) {
@@ -8,8 +10,18 @@ class NonAdminPage extends Component {
             username: "",
             userId: props.userId,
             isSuspended: false,
-            operation: 1
+            operation: 1,
+
+            itemKeyword: "",
+            searchCategories: "",
+            showSearchResult: false,
+            searchResult: [],
+
+            showPopup: false
         }
+
+        this.onClickBack = this.onClickBack.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
     componentDidMount() {
@@ -45,13 +57,135 @@ class NonAdminPage extends Component {
             case 3:
                 window.location.href = "/mybids/" + this.state.userId;
                 break;
+            case 4:
+                window.location.href = "/mywatchlist/" + this.state.userId;
+                break;
+            case 5:
+                this.setState({
+                    showPopup: true
+                })
+                break;
             default:
         }
+    }
+
+    handleChange(e) {
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleSearchSubmit(e) {
+        e.preventDefault()
+
+        let keywordList = this.state.itemKeyword.split();
+        let categoriesList = this.state.searchCategories.split();
+
+        const url = "";
+
+        fetch(url)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({
+                    showSearchResult: true,
+                    searchResult: result.result
+                })
+            },  
+            (error) => {
+                // alert("Some errors occured during the searching, please retry...");
+                this.setState({
+                    showSearchResult: true,
+                    searchResult: [
+                        {
+                            itemName: "item1",
+                            startingPrice: 2342342,
+                            currentHighestBid: 34535,
+                            startTime: "sdfsfs",
+                            expireTime: "32425242",
+                            shippingCost: "sdfrsf",
+                            buyNow: false,
+                            itemDescription: "sfsfsdf",
+                            sellerRating: "A",
+                            status: "opened"
+                        },
+                        {
+                            itemName: "item1",
+                            startingPrice: 2342342,
+                            currentHighestBid: 34535,
+                            startTime: "sdfsfs",
+                            expireTime: "32425242",
+                            shippingCost: "sdfrsf",
+                            buyNow: false,
+                            itemDescription: "sfsfsdf",
+                            sellerRating: "A",
+                            status: "opened"
+                        },
+                        {
+                            itemName: "item1",
+                            startingPrice: 2342342,
+                            currentHighestBid: 34535,
+                            startTime: "sdfsfs",
+                            expireTime: "32425242",
+                            shippingCost: "sdfrsf",
+                            buyNow: false,
+                            itemDescription: "sfsfsdf",
+                            sellerRating: "A",
+                            status: "waiting"
+                        },
+                    ]
+                })
+            }
+        )
+    }
+
+    onClickBack() {
+        this.setState({
+            showSearchResult: false
+        })
+    }
+
+    onClose() {
+        this.setState({
+            showPopup: false
+        })
     }
 
     render() {
         let body;
         if (this.state.username !== "") {
+            let searchSection;
+
+            if (this.state.showSearchResult) {
+                searchSection = (
+                    <div>
+                        <SearchResultList onClickBack={this.onClickBack} searchResult={this.state.searchResult}></SearchResultList>
+                    </div>
+                )
+                
+            } else {
+                searchSection = (
+                    <div>
+                        <form className="search-bar" onSubmit={e => this.handleSearchSubmit(e)}>
+                            <div>Search for items to bid on!</div>
+                            <div>
+                                <span>Item Keywords: </span>
+                                <input name="itemKeyword" type="text" onChange={e => this.handleChange(e)}></input>
+                            </div>
+                            <div>
+                                <span>Categories: </span>
+                                <input name="searchCategories" type="text" onChange={e => this.handleChange(e)}></input>
+                            </div>
+                            <input type="submit" value="Search"></input>
+                        </form>
+                    </div>
+                )
+            }
+
             body = (
                 <div>
                     <div>
@@ -64,7 +198,10 @@ class NonAdminPage extends Component {
                         <button onClick={() => this.chooseOperation(1)}>Manage Account</button>
                         <button onClick={() => this.chooseOperation(2)}>My Auctions</button>
                         <button onClick={() => this.chooseOperation(3)}>My Bids</button>
+                        <button onClick={() => this.chooseOperation(4)}>My Watchlist</button>
+                        <button onClick={() => this.chooseOperation(5)}>My Auction Window</button>
                     </div>
+                    {searchSection}
                 </div>
             )
         } else {
@@ -77,7 +214,10 @@ class NonAdminPage extends Component {
 
         return (
             <div>
-                {body}
+                <div className="non-admin-page-body">
+                    {body}
+                </div>
+                {this.state.showPopup ? <Popup onClose={this.onClose}></Popup> : null}
             </div>
         );
     }

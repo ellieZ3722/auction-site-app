@@ -39,7 +39,7 @@ class Login extends Component {
             },
             (error) => {
                 // window.location.href = "/login/fail";
-                window.location.href = "/user/admin/12345";
+                window.location.href = "/user/nonadmin/12345";
             }
         )
     }
