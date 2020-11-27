@@ -10,12 +10,14 @@ class BidRow extends Component {
             itemName: props.bid.itemName,
             myCurrentBidPrice: props.bid.myCurrentBidPrice,
             currentHighestBidPrice: props.bid.currentHighestBidPrice,
+            bidStatus: props.bid.status,
 
             newBidPrice: 0
         }
 
         this.onIncrementSubmit = this.onIncrementSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleAddCart = this.handleAddCart.bind(this);
     }
 
     onIncrementSubmit(e) {
@@ -58,6 +60,21 @@ class BidRow extends Component {
         })
     }
 
+    handleAddCart() {
+        const url = "";
+
+        fetch(url)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                alert("The item has been added to your shopping cart successfully.");
+            },
+            (error) => {
+                alert("An error occurred when attempted to add the item to your shopping cart...");
+            }
+        )
+    }
+
     render() {
         return (
             <div className="bid-row">
@@ -67,8 +84,12 @@ class BidRow extends Component {
                 <div className="bid-cell new-bid-cell">
                     <form onSubmit={(e) => this.onIncrementSubmit(e)}>
                         <input type="number" name="newBidPrice" value={this.state.newBidPrice} onChange={e => this.handleChange(e)}></input>
-                        <input type ="submit" value="+"></input>
+                        <input type ="submit" value="place"></input>
                     </form>
+                </div>
+                <div className="bid-cell">{this.state.bidStatus}</div>
+                <div className="bid-cell">
+                    { this.state.bidStatus === "won" ? <button onClick={() => this.handleAddCart()}>Add to cart</button> : null }
                 </div>
             </div>
         );

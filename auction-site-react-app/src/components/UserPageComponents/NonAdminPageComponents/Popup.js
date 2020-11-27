@@ -64,7 +64,7 @@ class Popup extends Component {
                     <div className="window-list-row">
                         <div className="window-list-cell">{entry.itemName}</div>
                         <div className="window-list-cell">
-                            <Countdown date={countdownDate}></Countdown>
+                            <Countdown date={countdownDate}>Started</Countdown>
                         </div>
                     </div>
                 )

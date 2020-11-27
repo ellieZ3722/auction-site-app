@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import SearchResultList from "../../SearchComponents/SearchResultList";
 import Popup from "./Popup";
+import CartPopup from "./CartPopup";
 
 class NonAdminPage extends Component {
     constructor(props) {
@@ -17,11 +18,14 @@ class NonAdminPage extends Component {
             showSearchResult: false,
             searchResult: [],
 
-            showPopup: false
+            showPopup: false,
+            showCart: false
         }
 
         this.onClickBack = this.onClickBack.bind(this);
         this.onClose = this.onClose.bind(this);
+        this.onCloseCart = this.onCloseCart.bind(this);
+        this.onClickCart = this.onClickCart.bind(this);
     }
 
     componentDidMount() {
@@ -111,7 +115,7 @@ class NonAdminPage extends Component {
                             buyNow: false,
                             itemDescription: "sfsfsdf",
                             sellerRating: "A",
-                            status: "opened"
+                            status: "opened",
                         },
                         {
                             itemName: "item1",
@@ -120,7 +124,7 @@ class NonAdminPage extends Component {
                             startTime: "sdfsfs",
                             expireTime: "32425242",
                             shippingCost: "sdfrsf",
-                            buyNow: false,
+                            buyNow: true,
                             itemDescription: "sfsfsdf",
                             sellerRating: "A",
                             status: "opened"
@@ -132,7 +136,7 @@ class NonAdminPage extends Component {
                             startTime: "sdfsfs",
                             expireTime: "32425242",
                             shippingCost: "sdfrsf",
-                            buyNow: false,
+                            buyNow: true,
                             itemDescription: "sfsfsdf",
                             sellerRating: "A",
                             status: "waiting"
@@ -155,6 +159,18 @@ class NonAdminPage extends Component {
         })
     }
 
+    onClickCart() {
+        this.setState({
+            showCart: true
+        })
+    }
+
+    onCloseCart() {
+        this.setState({
+            showCart: false
+        })
+    }
+
     render() {
         let body;
         if (this.state.username !== "") {
@@ -163,7 +179,7 @@ class NonAdminPage extends Component {
             if (this.state.showSearchResult) {
                 searchSection = (
                     <div>
-                        <SearchResultList onClickBack={this.onClickBack} searchResult={this.state.searchResult}></SearchResultList>
+                        <SearchResultList userId={this.state.userId} onClickBack={this.onClickBack} searchResult={this.state.searchResult}></SearchResultList>
                     </div>
                 )
                 
@@ -193,6 +209,7 @@ class NonAdminPage extends Component {
                         <Link to="/">
                             <button>Logout</button>
                         </Link>
+                        <button onClick={this.onClickCart}>Cart</button>
                     </div>
                     <div className="operationButtons">
                         <button onClick={() => this.chooseOperation(1)}>Manage Account</button>
@@ -218,6 +235,7 @@ class NonAdminPage extends Component {
                     {body}
                 </div>
                 {this.state.showPopup ? <Popup onClose={this.onClose}></Popup> : null}
+                {this.state.showCart ? <CartPopup userId={this.state.userId} onClose={this.onCloseCart}></CartPopup> : null}
             </div>
         );
     }

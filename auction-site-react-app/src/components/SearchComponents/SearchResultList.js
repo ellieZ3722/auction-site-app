@@ -11,6 +11,7 @@ class SearchResultList extends Component {
         }
 
         this.onClose = this.onClose.bind(this)
+        this.onCartClick = this.onCartClick.bind(this)
     }
 
     onDetailClick(entry) {
@@ -26,6 +27,21 @@ class SearchResultList extends Component {
         })
     }
 
+    onCartClick(entry) {
+        const url = "";
+
+        fetch(url)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                alert("The item has been added to your shopping cart successfully.");
+            },
+            (error) => {
+                alert("An error occurred when attempted to add the item to your shopping cart...");
+            }
+        )
+    }
+
     render() {
         let body = this.props.searchResult.map(entry => {
             return (
@@ -37,6 +53,9 @@ class SearchResultList extends Component {
                     <div className="search-cell">{entry.currentHighestBid}</div>
                     <div className="search-cell">
                         <button onClick={() => this.onDetailClick(entry)}>Detail</button>
+                    </div>
+                    <div className="search-cell">
+                        { entry.buyNow ? <button onClick={() => this.onCartClick(entry)}>Add to cart</button> : null }
                     </div>
                 </div>
             )
@@ -52,6 +71,7 @@ class SearchResultList extends Component {
                         <div className="search-cell">Start Price</div>
                         <div className="search-cell">Current Highest Bid</div>
                         <div className="search-cell">Detail</div>
+                        <div className="search-cell">BuyNow</div>
                     </div>
                     {body}
                     <button onClick={this.props.onClickBack}>Back to search</button>
