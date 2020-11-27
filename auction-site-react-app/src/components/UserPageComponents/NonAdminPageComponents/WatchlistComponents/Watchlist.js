@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Popup from "./Popup";
 
 class Watchlist extends Component {
     constructor(props) {
@@ -9,8 +10,13 @@ class Watchlist extends Component {
             userId: props.userId,
 
             fetchWatchlistStatus: "fetching",
-            watchlist: []
+            watchlist: [],
+
+            showPopup: false
         }
+
+        this.onClickAddWatchlist = this.onClickAddWatchlist.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
     componentDidMount() {
@@ -50,6 +56,20 @@ class Watchlist extends Component {
         )
     }
 
+    onClickAddWatchlist() {
+        console.log("showup")
+        this.setState({
+            showPopup: true
+        })
+        console.log(this.state.showUp)
+    }
+
+    onClose() {
+        this.setState({
+            showPopup: false
+        })
+    }
+
     render() {
         let body;
 
@@ -82,10 +102,14 @@ class Watchlist extends Component {
 
         return (
             <div>
-                <Link to={`/user/nonadmin/` + this.state.userId}>
-                    <button>back to user page</button>
-                </Link>
-                {body}
+                <div className="watchlist-body">
+                    <Link to={`/user/nonadmin/` + this.state.userId}>
+                        <button>back to user page</button>
+                    </Link>
+                    <button onClick={this.onClickAddWatchlist}>add to watchlist</button>
+                    {body}
+                </div>
+                {this.state.showPopup ? <Popup onClose={this.onClose}></Popup> : null}
             </div>
         );
     }
