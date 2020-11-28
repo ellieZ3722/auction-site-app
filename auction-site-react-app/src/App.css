@@ -40,12 +40,15 @@
 .auction-row {
   margin: auto;
   display: flex;
-  width: 70%;
+  align-items: center;
+
+  justify-content: center;
+  width: 95%;
   height: 60px;
 }
 
 .auction-cell {
-  width: 16.666666667%;
+  width: 7.69%;
   padding: 15px;
 }
 
@@ -120,4 +123,22 @@ body {
 .window-list-cell {
   width: 50%;
   padding: 15px;
+}
+
+.flagged-row {
+  margin: auto;
+  display: flex;
+  width: 70%;
+  height: 60px;
+}
+
+.flagged-cell {
+  width: 33.333333%;
+  padding: 15px;
+}
+
+.buynow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

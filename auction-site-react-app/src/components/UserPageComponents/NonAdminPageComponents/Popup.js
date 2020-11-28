@@ -14,9 +14,18 @@ class Popup extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:8080/auction/item/countdown/" + this.state.userId;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {

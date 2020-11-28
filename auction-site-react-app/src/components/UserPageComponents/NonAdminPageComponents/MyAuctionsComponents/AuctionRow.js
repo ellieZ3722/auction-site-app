@@ -18,7 +18,9 @@ class AuctionRow extends Component {
             itemDescription: props.auction.itemDescription,
             sellerRating: props.auction.sellerRating,
             status: props.auction.status,
-            categories: props.auction.categories
+            categories: props.auction.categories,
+            bidCount: props.auction.bidCount,
+            buyNowPrice: props.auction.buyNowPrice
         }
     }
 
@@ -42,8 +44,10 @@ class AuctionRow extends Component {
                 <div className="auction-cell">{this.state.quantity}</div>
                 <div className="auction-cell">{this.state.shippingCosts}</div>
                 <div className="auction-cell">{this.state.buyNow ? "Available" : "Not Available"}</div>
+                <div className="auction-cell">{this.state.buyNow ? this.state.buyNowPrice : null }</div>
                 <div className="auction-cell">{this.state.itemDescription}</div>
                 <div className="auction-cell">{this.state.sellerRating}</div>
+                <div className="auction-cell">{this.state.bidCount}</div>
             </div>
         );
     }

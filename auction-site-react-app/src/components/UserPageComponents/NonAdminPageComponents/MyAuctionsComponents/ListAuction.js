@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import DateTimePicker from 'react-datetime-picker';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 class ListAuction extends Component {
     constructor(props) {
@@ -7,25 +9,28 @@ class ListAuction extends Component {
         this.state = {
             userId: props.match.params.userid,
             
-            itemName: "",
+            name: "",
             startPrice: 0,
-            startTime: "",
+            startTime: new Date(),
             quantity: 0,
-            timeExpire: "",
-            shippingCosts: "",
+            timeExpire: new Date(),
+            shippingCosts: 0,
             buyNow: false,
             itemDescription: "",
-            sellerRating: "",
-            categories: []
+            sellerRating: 0,
+            category: "",
+            buyNowPrice: 3453,
+
+            itemId: ""
         }
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.onCategoryAdd = this.onCategoryAdd.bind(this);
+        this.onClickBuynow = this.onClickBuynow.bind(this);
     }
 
     onChange(e) {
-        e.preventDefault();
+        e.preventDefault()
 
         const target = e.target;
         const value = target.value;
@@ -36,42 +41,102 @@ class ListAuction extends Component {
         })
     }
 
-    onCategoryAdd(e) {
-        e.preventDefault();
-
-        const target = e.target;
-        const value = target.value;
-
-        var categories = value.split(",");
-        var cat_list = [];
-        for (var i = 0; i < categories.length; i++) {
-            var category = categories[i].trim();
-            cat_list.push(category);
-        }
-
+    onStartTimeChange(date) {
         this.setState({
-            categories: cat_list
+            startTime: date
         })
     }
 
-    onSubmit(e) {
+    onEndTimeChange(date) {
+        this.setState({
+            timeExpire: date
+        })
+    }
+
+    async onSubmit(e) {
         e.preventDefault()
 
-        // check if the start time is later than the current time
+        const createItemUrl = "http://localhost:8080/auction/item/create";
+        const createAuctionUrl = "http://localhost:9090/auction/bidding/newBid";
+        
+        const dataItem = {
+            "quantity": this.state.quantity,
+            "ratings": this.state.sellerRating,
+            "description": this.state.itemDescription,
+            "name": this.state.name,
+            "categoryId": this.state.category,
+            "isFlagged": false
+        }   
 
-        const url = "";
+        let itemID = "";
 
-        fetch(url)
+        await fetch(createItemUrl, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(dataItem),
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                alert("Your new auction has been listed successfully.");
-                window.location.href = "/myauctions/" + this.state.userId;
+                if (result.success) {
+                    console.log("add item", result)
+                    itemID = result.item.id
+                } else {
+                    alert("An error occurred when attempted to list your auction...");
+                }
             },
             (error) => {
                 alert("An error occurred when attempted to list your auction...");
             }
         )
+
+        const dataAuction = {
+            "itemId": itemID,
+            "sellerId": this.state.userId,
+            "startTime": this.state.startTime.toISOString(),
+            "endTime": this.state.timeExpire.toISOString(),
+            "initPrice": this.state.startPrice,
+            "canBuyNow": this.state.buyNow,
+            "buyNowPrice": this.state.buyNowPrice
+        }
+
+        await fetch(createAuctionUrl, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(dataAuction),
+            referrerPolicy: 'no-referrer'
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                if (result.success) {
+                    console.log(result)
+                    alert("Your auction has been successfully listed.")
+                } else {
+                    alert("An error occurred when attempted to list your auction...");
+                }
+            },
+            (error) => {
+                alert("An error occurred when attempted to list your auction...");
+            }
+        )
+    }
+
+    onClickBuynow(bool) {
+        this.setState({
+            buyNow: bool
+        })
     }
 
     render() {
@@ -84,31 +149,43 @@ class ListAuction extends Component {
                 <form onSubmit={(e) => this.onSubmit(e)}>
                     <div>
                         <span>Item Name: </span>
-                        <input type="text" name="itemName" onChange={e => this.onChange(e)}></input>
-                    </div>
-                    <div>
-                        <span>Start Price: </span>
-                        <input type="text" name="startPrice" onChange={e => this.onChange(e)}></input>
-                    </div>
-                    <div>
-                        <span>Start Time: </span>
-                        <input type="text" name="startTime" onChange={e => this.onChange(e)}></input>
+                        <input type="text" name="name" onChange={e => this.onChange(e)}></input>
                     </div>
                     <div>
                         <span>Quantity: </span>
-                        <input type="text" name="quantity" onChange={e => this.onChange(e)}></input>
+                        <input type="number" name="quantity" onChange={e => this.onChange(e)}></input>
+                    </div>
+                    <div>
+                        <span>Start Time: </span>
+                        <DateTimePicker closeWidgets={true} value={this.state.startTime} onChange={date => this.onStartTimeChange(date)}></DateTimePicker>
                     </div>
                     <div>
                         <span>Expire Time: </span>
-                        <input type="text" name="timeExpire" onChange={e => this.onChange(e)}></input>
+                        <DateTimePicker value={this.state.timeExpire} onChange={date => this.onEndTimeChange(date)}></DateTimePicker>
+                    </div>
+                    <div>
+                        <span>Start Price: </span>
+                        <input type="number" name="startPrice" onChange={e => this.onChange(e)}></input>
                     </div>
                     <div>
                         <span>Shipping Cost: </span>
-                        <input type="text" name="shippingCost" onChange={e => this.onChange(e)}></input>
+                        <input type="number" name="shippingCost" onChange={e => this.onChange(e)}></input>
+                    </div>
+                    <div className="buynow-button">
+                        <span>Buynow Option: </span>
+                        <Dropdown key={'Primary'}>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                { this.state.buyNow ? "Available" : "Not Available" }
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => this.onClickBuynow(true)}>Available</Dropdown.Item>
+                                <Dropdown.Item onClick={() => this.onClickBuynow(false)}>Not Available</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
                     <div>
-                        <span>Buynow Option: </span>
-                        <input type="text" name="buyNow" onChange={e => this.onChange(e)}></input>
+                        <span>Buynow Price: </span>
+                        <input type="number" name="buyNowPrice" onChange={e => this.onChange(e)}></input>
                     </div>
                     <div>
                         <span>Item Description: </span>
@@ -116,11 +193,11 @@ class ListAuction extends Component {
                     </div>
                     <div>
                         <span>Seller Rating: </span>
-                        <input type="text" name="sellerRating" onChange={e => this.onChange(e)}></input>
+                        <input type="number" step="0.1" name="sellerRating" onChange={e => this.onChange(e)}></input>
                     </div>
                     <div>
-                        <span>Categories (separate by comma if you have multiple categories):</span>
-                        <input type="text" name="category" onChange={e => this.onCategoryAdd(e)}></input>
+                        <span>Category:</span>
+                        <input type="text" name="category" onChange={e => this.onChange(e)}></input>
                     </div>
                     <div>
                         <input type ="submit" value="List"></input>

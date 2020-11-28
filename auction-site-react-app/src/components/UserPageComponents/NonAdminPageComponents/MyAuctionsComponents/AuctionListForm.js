@@ -10,7 +10,7 @@ class AuctionListForm extends Component {
             // auctionList: props.auctionList 
             auctionList: [
                 {   
-                    auctionId: "1234",
+                    auctionId: "1",
                     itemName: "item1",
                     startPrice: 0,
                     startTime: "7/8/2020",
@@ -18,13 +18,16 @@ class AuctionListForm extends Component {
                     timeExpire: "8/8/2020",
                     shippingCosts: "$12",
                     buyNow: false,
+                    buyNowPrice: 23423,
                     itemDescription: "Description...",
                     sellerRating: "A",
                     status: "Started",
-                    categories: ["cat1", "cat2", "cat3"]
+                    categories: ["cat1", "cat2", "cat3"],
+
+                    bidCount: 1
                 },
                 {
-                    auctionId: "1235",
+                    auctionId: "2",
                     itemName: "item2",
                     startPrice: 0,
                     startTime: "7/8/2020",
@@ -32,13 +35,16 @@ class AuctionListForm extends Component {
                     timeExpire: "8/8/2020",
                     shippingCosts: "$12",
                     buyNow: true,
+                    buyNowPrice: 23423,
                     itemDescription: "Description...",
                     sellerRating: "A",
                     status: "Not Started",
-                    categories: ["cat1", "cat2", "cat3"]
+                    categories: ["cat1", "cat2", "cat3"],
+
+                    bidCount: 1
                 },
                 {
-                    auctionId: "1236",
+                    auctionId: "3",
                     itemName: "item3",
                     startPrice: 0,
                     startTime: "7/8/2020",
@@ -46,13 +52,16 @@ class AuctionListForm extends Component {
                     timeExpire: "8/8/2020",
                     shippingCosts: "$12",
                     buyNow: false,
+                    buyNowPrice: 23423,
                     itemDescription: "Description...",
                     sellerRating: "A",
                     status: "Closed",
-                    categories: ["cat1", "cat2", "cat3"]
+                    categories: ["cat1", "cat2", "cat3"],
+
+                    bidCount: 1
                 },
                 {
-                    auctionId: "1237",
+                    auctionId: "4",
                     itemName: "item4",
                     startPrice: 0,
                     startTime: "7/8/2020",
@@ -60,13 +69,16 @@ class AuctionListForm extends Component {
                     timeExpire: "8/8/2020",
                     shippingCosts: "$12",
                     buyNow: false,
+                    buyNowPrice: 23423,
                     itemDescription: "Description...",
                     sellerRating: "A",
                     status: "Cancelled",
-                    categories: ["cat1", "cat2", "cat3"]
+                    categories: ["cat1", "cat2", "cat3"],
+
+                    bidCount: 1
                 },
                 {
-                    auctionId: "1238",
+                    auctionId: "5",
                     itemName: "item5",
                     startPrice: 0,
                     startTime: "7/8/2020",
@@ -74,10 +86,13 @@ class AuctionListForm extends Component {
                     timeExpire: "8/8/2020",
                     shippingCosts: "$12",
                     buyNow: false,
+                    buyNowPrice: 23423,
                     itemDescription: "Description...",
                     sellerRating: "A",
                     status: "Cancelled",
-                    categories: ["cat1", "cat2", "cat3"]
+                    categories: ["cat1", "cat2", "cat3"],
+
+                    bidCount: 1
                 }
             ]
         }
@@ -93,7 +108,7 @@ class AuctionListForm extends Component {
         let form = this.state.auctionList.map(entry => {
             let auctionId = entry.auctionId;
             return (
-                <AuctionRow onClick={() => this.updateAuction(auctionId)} auction={entry}></AuctionRow>
+                <AuctionRow key={entry.auctionId} onClick={() => this.updateAuction(auctionId)} auction={entry}></AuctionRow>
             )
         })
         
@@ -109,8 +124,10 @@ class AuctionListForm extends Component {
                     <div className="auction-cell">Quantity</div>
                     <div className="auction-cell">Shipping Cost</div>
                     <div className="auction-cell">Buynow</div>
+                    <div className="auction-cell">Buynow Price</div>
                     <div className="auction-cell">Item Description</div>
                     <div className="auction-cell">Seller Rating</div>
+                    <div className="auction-cell">Bid Count</div>
                 </div>
                 {form}
             </div>

@@ -16,7 +16,7 @@ class MyAuctions extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:9090/auction/offer/prevBids/" + this.state.userId;
 
         fetch(url)
         .then(res => res.json())
@@ -35,6 +35,30 @@ class MyAuctions extends Component {
                 })
             }
         )
+
+        // fetch(url, {
+        //     method: "GET",
+        //     mode: 'cors',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Accept :'application/json',
+        //         'Origin': 'http://localhost:3000'
+        //     },
+        //     referrerPolicy: 'no-referrer'
+        // })
+        // .then(res => res.json())
+        // .then(
+        //     (result) => {
+        //         console.log("auction list result", result)
+        //         this.setState({
+        //             auctionListFetchSuccess: true,
+        //             auctionList: result
+        //         })
+        //     },  
+        //     (error) => {
+        //         // window.location.href = "/myauctions/fail/" + this.state.userId;
+        //     }
+        // )
     }
 
     addAuction() {

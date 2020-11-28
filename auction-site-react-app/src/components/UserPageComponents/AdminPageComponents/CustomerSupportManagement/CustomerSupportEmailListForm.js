@@ -36,28 +36,28 @@ class CustomerSupportEmailListForm extends Component {
                     emailFetchStatus: "success",
                     emailList: [
                         {
-                            userId: "2353463",
+                            userId: "235343",
                             receivedTime: "64747",
                             emailTitle: "title1",
                             content: "1111111111112143523534663463",
                             replyStatus: false
                         },
                         {
-                            userId: "2353463",
+                            userId: "233463",
                             receivedTime: "64747",
                             emailTitle: "title2",
                             content: "1111111111112143523534663463",
                             replyStatus: false
                         },
                         {
-                            userId: "2353463",
+                            userId: "235343",
                             receivedTime: "64747",
                             emailTitle: "title3",
                             content: "1111111111112143523534663463",
                             replyStatus: false
                         },
                         {
-                            userId: "2353463",
+                            userId: "235463",
                             receivedTime: "64747",
                             emailTitle: "title4",
                             content: "1111111111112143523534663463",
@@ -89,7 +89,7 @@ class CustomerSupportEmailListForm extends Component {
 
             let form = this.state.emailList.map(entry => {
                 return (
-                    <div className="user-row" onClick={() => this.onClick(entry)}>
+                    <div key={entry.emailTitle} className="user-row" onClick={() => this.onClick(entry)}>
                         <div className="user-cell">{entry.receivedTime}</div>
                         <div className="user-cell">{entry.userId}</div>
                         <div className="user-cell">{entry.emailTitle}</div>

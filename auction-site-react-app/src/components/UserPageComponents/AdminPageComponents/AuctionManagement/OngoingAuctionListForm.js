@@ -10,9 +10,18 @@ class OngoingAuctionListForm extends Component {
     }
 
     stopAuction(auctionId) {
-        const url = "";
+        const url = "http://localhost:9090/auction/bidding/closeBid/" + auctionId;
 
-        fetch(url)
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -46,18 +55,12 @@ class OngoingAuctionListForm extends Component {
             }
 
             return (
-                <div className="auction-row">
-                    <div className="auction-cell">{entry.auctionId}</div>
+                <div key={entry.auctionId} className="auction-row">
+                    <div className="auction-cell">{entry.itenId}</div>
                     <div className="auction-cell">{entry.itemName}</div>
-                    <div className="auction-cell">{categories}</div>
-                    <div className="auction-cell">{entry.startPrice}</div>
                     <div className="auction-cell">{entry.startTime}</div>
-                    <div className="auction-cell">{entry.timeExpire}</div>
-                    <div className="auction-cell">{entry.quantity}</div>
-                    <div className="auction-cell">{entry.shippingCosts}</div>
-                    <div className="auction-cell">{entry.buyNow ? "Available" : "Not Available"}</div>
-                    <div className="auction-cell">{entry.itemDescription}</div>
-                    <div className="auction-cell">{entry.sellerRating}</div>
+                    <div className="auction-cell">{entry.endTime}</div>
+                    <div className="auction-cell">{entry.canBuyNow ? "Available" : "Not Available"}</div>
                     <div className="auction-cell">
                         <button onClick={() => this.stopAuction(entry.auctionId)}>Stop</button>
                     </div>
@@ -70,15 +73,9 @@ class OngoingAuctionListForm extends Component {
                 <div className="auction-row">
                     <div className="auction-cell">Auction Id</div>
                     <div className="auction-cell">Item Name</div>
-                    <div className="auction-cell">Categories</div>
-                    <div className="auction-cell">Start Price</div>
                     <div className="auction-cell">Start Time</div>
                     <div className="auction-cell">Expire Time</div>
-                    <div className="auction-cell">Quantity</div>
-                    <div className="auction-cell">Shipping Cost</div>
                     <div className="auction-cell">Buynow</div>
-                    <div className="auction-cell">Description</div>
-                    <div className="auction-cell">Seller Rating</div>
                     <div className="auction-cell">
                         Stop Auction
                     </div>

@@ -11,9 +11,18 @@ class FlaggedItemListForm extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:8080/auction/item/flagged";
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -23,34 +32,8 @@ class FlaggedItemListForm extends Component {
                })
             },
             (error) => {
-                // this.setState({
-                //     flaggedItemListFetchStatus: "fail"
-                // })
                 this.setState({
-                    flaggedItemListFetchStatus: "success",
-                    flaggedItemList: [
-                        {
-                            itemName: "item1",
-                            itemId: "23254",
-                            flaggedByUserIdList: [
-                                "12", "3453", "345464"
-                            ]
-                        },
-                        {
-                            itemName: "item2",
-                            itemId: "23254",
-                            flaggedByUserIdList: [
-                                "12", "3453", "345464"
-                            ]
-                        },
-                        {
-                            itemName: "item3",
-                            itemId: "23254",
-                            flaggedByUserIdList: [
-                                "12", "3453", "345464"
-                            ]
-                        }
-                    ]
+                    flaggedItemListFetchStatus: "fail"
                 })
             }
         )
@@ -72,20 +55,20 @@ class FlaggedItemListForm extends Component {
                 }
 
                 return (
-                    <div className="user-row">
-                        <div className="user-cell">{entry.itemName}</div>
-                        <div className="user-cell">{entry.itemId}</div>
-                        <div className="user-cell">{flaggedBy}</div>
+                    <div key={entry.itemId} className="flagged-row">
+                        <div className="flagged-cell">{entry.itemName}</div>
+                        <div className="flagged-cell">{entry.itemId}</div>
+                        <div className="flagged-cell">{flaggedBy}</div>
                     </div>
                 )
             })
 
             body = (
                 <div>
-                    <div className="user-row">
-                        <div className="user-cell">Item Name</div>
-                        <div className="user-cell">Item ID</div>
-                        <div className="user-cell">Flagged By (userid)</div>
+                    <div className="flagged-row">
+                        <div className="flagged-cell">Item Name</div>
+                        <div className="flagged-cell">Item ID</div>
+                        <div className="flagged-cell">Flagged By (userid)</div>
                     </div>
                     {form}
                 </div>

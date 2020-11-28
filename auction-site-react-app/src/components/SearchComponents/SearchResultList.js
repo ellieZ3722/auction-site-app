@@ -12,7 +12,7 @@ class SearchResultList extends Component {
 
         this.onClose = this.onClose.bind(this)
         this.onCartClick = this.onCartClick.bind(this)
-    }
+    } 
 
     onDetailClick(entry) {
         this.setState({
@@ -46,7 +46,8 @@ class SearchResultList extends Component {
         let body = this.props.searchResult.map(entry => {
             return (
                 <div className="search-row">
-                    <div className="search-cell">{entry.itemName}</div>
+                    <div className="search-cell">{entry.name}</div>
+                    <div className="search-cell">{entry.quantity}</div>
                     <div className="search-cell">{entry.startTime}</div>
                     <div className="search-cell">{entry.expireTime}</div>
                     <div className="search-cell">{entry.startingPrice}</div>
@@ -55,7 +56,7 @@ class SearchResultList extends Component {
                         <button onClick={() => this.onDetailClick(entry)}>Detail</button>
                     </div>
                     <div className="search-cell">
-                        { entry.buyNow ? <button onClick={() => this.onCartClick(entry)}>Add to cart</button> : null }
+                        { entry.buyNow ? <button onClick={() => this.onCartClick(entry)}>Add to cart for ${entry.buyNowPrice}</button> : null }
                     </div>
                 </div>
             )
@@ -66,6 +67,7 @@ class SearchResultList extends Component {
                 <div className="search-result-body">
                     <div className="search-row">
                         <div className="search-cell">Item Name</div>
+                        <div className="search-cell">Quantity</div>
                         <div className="search-cell">Start Time</div>
                         <div className="search-cell">End Time</div>
                         <div className="search-cell">Start Price</div>
@@ -76,7 +78,7 @@ class SearchResultList extends Component {
                     {body}
                     <button onClick={this.props.onClickBack}>Back to search</button>
                 </div>
-                {this.state.showPopup ? <Popup entry={this.state.selectedItem} onClose={this.onClose}></Popup> : null}
+                {this.state.showPopup ? <Popup userID={this.props.userId} entry={this.state.selectedItem} onClose={this.onClose}></Popup> : null}
             </div>
         );
     }

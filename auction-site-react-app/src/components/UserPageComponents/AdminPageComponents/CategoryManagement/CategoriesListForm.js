@@ -57,14 +57,14 @@ class CategoriesListForm extends Component {
                             ]
                         },
                         {
-                            categoryName: "cat3",
+                            categoryName: "cat4",
                             categoryId: "23534643",
                             itemList: [
                                 "4353535", "0980"
                             ]
                         },
                         {
-                            categoryName: "cat3",
+                            categoryName: "cat5",
                             categoryId: "23534643",
                             itemList: [
                                 "4353535", "0980"
@@ -121,7 +121,7 @@ class CategoriesListForm extends Component {
                 }
 
                 return (
-                    <div className="user-row">
+                    <div key={entry.categoryName} className="user-row">
                         <div className="user-cell">{entry.categoryName}</div>
                         <div className="user-cell">{entry.categoryId}</div>
                         <div className="user-cell">{items}</div>

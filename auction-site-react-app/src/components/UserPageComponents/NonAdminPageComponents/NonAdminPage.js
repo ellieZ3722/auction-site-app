@@ -14,7 +14,7 @@ class NonAdminPage extends Component {
             operation: 1,
 
             itemKeyword: "",
-            searchCategories: "",
+            categoryKeyword: "",
             showSearchResult: false,
             searchResult: [],
 
@@ -83,66 +83,151 @@ class NonAdminPage extends Component {
         })
     }
 
-    handleSearchSubmit(e) {
+    handleKeywordSearchSubmit(e) {
         e.preventDefault()
 
-        let keywordList = this.state.itemKeyword.split();
-        let categoriesList = this.state.searchCategories.split();
+        let keyword = this.state.itemKeyword;
 
-        const url = "";
+        const url = "http://localhost:8080/auction/item/keyword/" + keyword;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
+                console.log("search result", result)
                 this.setState({
                     showSearchResult: true,
-                    searchResult: result.result
+                    // searchResult: result
+                    searchResult: [
+                                {
+                                    itemName: "item1",
+                                    startingPrice: 2342342,
+                                    currentHighestBid: 34535,
+                                    startTime: "sdfsfs",
+                                    expireTime: "32425242",
+                                    shippingCost: "sdfrsf", 
+                                    buyNow: false,
+                                    itemDescription: "sfsfsdf",
+                                    sellerRating: "A",
+                                    status: "opened",
+                                    buyNowPrice: 435
+                                },
+                                {
+                                    itemName: "item1",
+                                    startingPrice: 2342342,
+                                    currentHighestBid: 34535,
+                                    startTime: "sdfsfs",
+                                    expireTime: "32425242",
+                                    shippingCost: "sdfrsf",
+                                    buyNow: true,
+                                    itemDescription: "sfsfsdf",
+                                    sellerRating: "A",
+                                    status: "opened",
+                                    buyNowPrice: 435
+                                },
+                                {
+                                    itemName: "item1",
+                                    startingPrice: 2342342,
+                                    currentHighestBid: 34535,
+                                    startTime: "sdfsfs",
+                                    expireTime: "32425242",
+                                    shippingCost: "sdfrsf",
+                                    buyNow: true,
+                                    itemDescription: "sfsfsdf",
+                                    sellerRating: "A",
+                                    status: "waiting",
+                                    buyNowPrice: 435
+                                },
+                            ]
                 })
             },  
             (error) => {
-                // alert("Some errors occured during the searching, please retry...");
+                alert("Some errors occured during the searching, please retry...");
+                // this.setState({
+                //     showSearchResult: true,
+                //     searchResult: [
+                //         {
+                //             itemName: "item1",
+                //             startingPrice: 2342342,
+                //             currentHighestBid: 34535,
+                //             startTime: "sdfsfs",
+                //             expireTime: "32425242",
+                //             shippingCost: "sdfrsf", 
+                //             buyNow: false,
+                //             itemDescription: "sfsfsdf",
+                //             sellerRating: "A",
+                //             status: "opened",
+                //             buyNowPrice: 435
+                //         },
+                //         {
+                //             itemName: "item1",
+                //             startingPrice: 2342342,
+                //             currentHighestBid: 34535,
+                //             startTime: "sdfsfs",
+                //             expireTime: "32425242",
+                //             shippingCost: "sdfrsf",
+                //             buyNow: true,
+                //             itemDescription: "sfsfsdf",
+                //             sellerRating: "A",
+                //             status: "opened",
+                //             buyNowPrice: 435
+                //         },
+                //         {
+                //             itemName: "item1",
+                //             startingPrice: 2342342,
+                //             currentHighestBid: 34535,
+                //             startTime: "sdfsfs",
+                //             expireTime: "32425242",
+                //             shippingCost: "sdfrsf",
+                //             buyNow: true,
+                //             itemDescription: "sfsfsdf",
+                //             sellerRating: "A",
+                //             status: "waiting",
+                //             buyNowPrice: 435
+                //         },
+                //     ]
+                // })
+            }
+        )
+    }
+
+    handleCategorySearchSubmit(e) {
+        e.preventDefault()
+
+        let keyword = this.state.categoryKeyword;
+
+        const url = "http://localhost:8080/auction/item/category/" + keyword;
+
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log("search result", result)
                 this.setState({
                     showSearchResult: true,
-                    searchResult: [
-                        {
-                            itemName: "item1",
-                            startingPrice: 2342342,
-                            currentHighestBid: 34535,
-                            startTime: "sdfsfs",
-                            expireTime: "32425242",
-                            shippingCost: "sdfrsf",
-                            buyNow: false,
-                            itemDescription: "sfsfsdf",
-                            sellerRating: "A",
-                            status: "opened",
-                        },
-                        {
-                            itemName: "item1",
-                            startingPrice: 2342342,
-                            currentHighestBid: 34535,
-                            startTime: "sdfsfs",
-                            expireTime: "32425242",
-                            shippingCost: "sdfrsf",
-                            buyNow: true,
-                            itemDescription: "sfsfsdf",
-                            sellerRating: "A",
-                            status: "opened"
-                        },
-                        {
-                            itemName: "item1",
-                            startingPrice: 2342342,
-                            currentHighestBid: 34535,
-                            startTime: "sdfsfs",
-                            expireTime: "32425242",
-                            shippingCost: "sdfrsf",
-                            buyNow: true,
-                            itemDescription: "sfsfsdf",
-                            sellerRating: "A",
-                            status: "waiting"
-                        },
-                    ]
+                    searchResult: result
                 })
+            },  
+            (error) => {
+                alert("Some errors occured during the searching, please retry...");
             }
         )
     }
@@ -186,17 +271,20 @@ class NonAdminPage extends Component {
             } else {
                 searchSection = (
                     <div>
-                        <form className="search-bar" onSubmit={e => this.handleSearchSubmit(e)}>
-                            <div>Search for items to bid on!</div>
+                        <div>Search for items to bid on!</div>
+                        <form className="search-bar" onSubmit={e => this.handleKeywordSearchSubmit(e)}>
                             <div>
-                                <span>Item Keywords: </span>
+                                <span>Search by Keyword: </span>
                                 <input name="itemKeyword" type="text" onChange={e => this.handleChange(e)}></input>
                             </div>
+                            <input type="submit" value="GO!"></input>
+                        </form>
+                        <form className="search-bar" onSubmit={e => this.handleCategorySearchSubmit(e)}>
                             <div>
-                                <span>Categories: </span>
-                                <input name="searchCategories" type="text" onChange={e => this.handleChange(e)}></input>
+                                <span>Search by Category: </span>
+                                <input name="categoryKeyword" type="text" onChange={e => this.handleChange(e)}></input>
                             </div>
-                            <input type="submit" value="Search"></input>
+                            <input type="submit" value="GO!"></input>
                         </form>
                     </div>
                 )
@@ -234,7 +322,7 @@ class NonAdminPage extends Component {
                 <div className="non-admin-page-body">
                     {body}
                 </div>
-                {this.state.showPopup ? <Popup onClose={this.onClose}></Popup> : null}
+                {this.state.showPopup ? <Popup userId={this.props.userId} onClose={this.onClose}></Popup> : null}
                 {this.state.showCart ? <CartPopup userId={this.state.userId} onClose={this.onCloseCart}></CartPopup> : null}
             </div>
         );

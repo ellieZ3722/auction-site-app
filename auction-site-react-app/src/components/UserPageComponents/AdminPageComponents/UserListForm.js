@@ -30,25 +30,25 @@ class UserListForm extends Component {
                     userListFetchStatus: "success",
                     userList: [
                         {
-                            userId: "34535",
+                            userId: "345345",
                             username: "user1",
                             email: "@",
                             isSuspended: true
                         },
                         {
-                            userId: "34535",
+                            userId: "345315",
                             username: "user2",
                             email: "@",
                             isSuspended: false
                         },
                         {
-                            userId: "34535",
+                            userId: "346535",
                             username: "user3",
                             email: "@",
                             isSuspended: false
                         },
                         {
-                            userId: "34535",
+                            userId: "345356",
                             username: "user4",
                             email: "@",
                             isSuspended: false
@@ -103,7 +103,7 @@ class UserListForm extends Component {
         if (this.state.userListFetchStatus === "success") {
             let form = this.state.userList.map(entry => {
                 return (
-                    <div className="user-row">
+                    <div key={entry.userId} className="user-row">
                         <div className="user-cell">{entry.userId}</div>
                         <div className="user-cell">{entry.username}</div>
                         <div className="user-cell">{entry.email}</div>
