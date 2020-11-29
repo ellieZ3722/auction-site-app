@@ -10,10 +10,11 @@ class ErrorPage extends Component {
     }
 
     render() {
+        let subfix = this.state.routeSubfixUserid ? this.state.routeSubfixUserid : "";
         return (
             <div>
                 <p>{this.props.errorMessage}</p>
-                <Link to={this.props.route + this.state.routeSubfixUserid}>
+                <Link to={this.props.route + subfix}>
                     <button>{this.props.buttonName}</button>
                 </Link>
             </div>

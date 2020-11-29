@@ -14,9 +14,18 @@ class MyBids extends Component {
     }
 
     componentDidMount() {
-        const bidListUrl = "";
+        const bidListUrl = "http://localhost:9090/auction/offer/prevBids/" + this.state.userId;
 
-        fetch(bidListUrl)
+        fetch(bidListUrl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -26,11 +35,7 @@ class MyBids extends Component {
                 })
             },
             (error) => {
-                // window.location.href = "/mybids/fail/" + this.state.userId;
-                this.setState({
-                    bidListFetchSuccess: true,
-                    bidList: []
-                })
+                window.location.href = "/mybids/fail/" + this.state.userId;
             }
         )
     }

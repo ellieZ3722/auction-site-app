@@ -17,8 +17,17 @@ class Popup extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const url = "";
-        fetch(url)
+        const url = "http://localhost:23333/addItemToWatchlist/?uid=" + this.props.userId + "&item_id="+ "" + "&criteria=" + this.state.lessThanPrice;
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {

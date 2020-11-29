@@ -5,12 +5,12 @@ class BidRow extends Component {
         super(props);
 
         this.state = {
-            bidId: props.bid.bidId,
+            bidId: props.bid.itemId,
 
             itemName: props.bid.itemName,
-            myCurrentBidPrice: props.bid.myCurrentBidPrice,
-            currentHighestBidPrice: props.bid.currentHighestBidPrice,
-            bidStatus: props.bid.status,
+            myCurrentBidPrice: props.bid.bidderOfferPrice,
+            currentHighestBidPrice: props.bid.currHighestPrice,
+            bidStatus: props.bid.bidStatus,
 
             newBidPrice: 0
         }
@@ -32,9 +32,25 @@ class BidRow extends Component {
             return;
         }
 
-        const incrementBidUrl = "";
+        const incrementBidUrl = "http://localhost:9090/auction/bidding/newOffer";
 
-        fetch(incrementBidUrl)
+        var data = {
+            "itemId": this.state.bidId,
+            "userId": this.props.userId,
+            "newBidPrice": this.state.newBidPrice
+        }
+
+        fetch(incrementBidUrl, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(data),
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -45,6 +61,7 @@ class BidRow extends Component {
                 })
             },
             (error) => {
+                console.log(error)
                 alert("Your new bit is not successfully placed due to some errors...")
             }
         )
@@ -61,9 +78,18 @@ class BidRow extends Component {
     }
 
     handleAddCart() {
-        const url = "";
+        const url = "http://localhost:23334/addItemToCart/?uid=" + this.props.userId + "&item_id=" + this.state.bidId + "&price=" + this.state.currentHighestBidPrice;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -82,10 +108,10 @@ class BidRow extends Component {
                 <div className="bid-cell">{this.state.currentHighestBidPrice}</div>
                 <div className="bid-cell">{this.state.myCurrentBidPrice}</div>
                 <div className="bid-cell new-bid-cell">
-                    <form onSubmit={(e) => this.onIncrementSubmit(e)}>
+                    { this.state.bidStatus === "bidding" ? <form onSubmit={(e) => this.onIncrementSubmit(e)}>
                         <input type="number" name="newBidPrice" value={this.state.newBidPrice} onChange={e => this.handleChange(e)}></input>
                         <input type ="submit" value="place"></input>
-                    </form>
+                    </form> : null }
                 </div>
                 <div className="bid-cell">{this.state.bidStatus}</div>
                 <div className="bid-cell">

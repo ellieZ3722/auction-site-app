@@ -99,12 +99,14 @@ class ListAuction extends Component {
         const dataAuction = {
             "itemId": itemID,
             "sellerId": this.state.userId,
-            "startTime": this.state.startTime.toISOString(),
-            "endTime": this.state.timeExpire.toISOString(),
+            "startTime": this.state.startTime.toISOString().split('.')[0] + 'Z',
+            "endTime": this.state.timeExpire.toISOString().split('.')[0] + 'Z',
             "initPrice": this.state.startPrice,
             "canBuyNow": this.state.buyNow,
             "buyNowPrice": this.state.buyNowPrice
         }
+
+        console.log("dataa", JSON.stringify(dataAuction))
 
         await fetch(createAuctionUrl, {
             method: "POST",
@@ -124,10 +126,12 @@ class ListAuction extends Component {
                     console.log(result)
                     alert("Your auction has been successfully listed.")
                 } else {
+                    console.log(111)
                     alert("An error occurred when attempted to list your auction...");
                 }
             },
             (error) => {
+                console.log(error)
                 alert("An error occurred when attempted to list your auction...");
             }
         )

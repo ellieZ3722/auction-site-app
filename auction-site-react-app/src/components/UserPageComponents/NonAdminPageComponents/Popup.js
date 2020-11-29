@@ -14,7 +14,8 @@ class Popup extends Component {
     }
 
     componentDidMount() {
-        const url = "http://localhost:8080/auction/item/countdown/" + this.state.userId;
+        // const url = "http://localhost:9090/auction/bidding/countdown/" + this.props.userId;
+        const url = ""
 
         fetch(url, {
             method: "GET",
@@ -31,7 +32,23 @@ class Popup extends Component {
             (result) => {
                 this.setState({
                     fetchWindowListStatus: "success",
-                    watchlist: result.windowList
+                    windowList: [
+                        {
+                            itemId: "001",
+                            itemName: "item1",
+                            startTime: "2020-11-29T17:49:00Z"
+                        },
+                        {
+                            itemId: "002",
+                            itemName: "item1",
+                            startTime: "2020-11-29T17:49:00Z"
+                        },
+                        {
+                            itemId: "003",
+                            itemName: "item1",
+                            startTime: "2020-11-29T17:49:00Z"
+                        }
+                    ]
                 })
             },
             (error) => {
@@ -41,19 +58,19 @@ class Popup extends Component {
                     fetchWindowListStatus: "success",
                     windowList: [
                         {
-                            auctionId: "001",
+                            itemId: "001",
                             itemName: "item1",
-                            startTime: 654654
+                            startTime: "2020-12-29T17:49:00Z"
                         },
                         {
-                            auctionId: "002",
+                            itemId: "002",
                             itemName: "item1",
-                            startTime: 654654
+                            startTime: "2020-12-29T17:49:00Z"
                         },
                         {
-                            auctionId: "003",
+                            itemId: "003",
                             itemName: "item1",
-                            startTime: 654654
+                            startTime: "2020-12-29T17:49:00Z"
                         }
                     ]
                 })
@@ -65,15 +82,15 @@ class Popup extends Component {
     render() {
         let body;
 
-        let countdownDate = new Date("Jan 5, 2021 15:37:25").getTime();
-
         if (this.state.fetchWindowListStatus === "success") {
             let subbody = this.state.windowList.map(entry => {
+                var _date = new Date(entry.startTime);
+
                 return (
                     <div className="window-list-row">
                         <div className="window-list-cell">{entry.itemName}</div>
                         <div className="window-list-cell">
-                            <Countdown date={countdownDate}>Started</Countdown>
+                            <Countdown date={_date}>Started</Countdown>
                         </div>
                     </div>
                 )

@@ -29,23 +29,29 @@ class NonAdminPage extends Component {
     }
 
     componentDidMount() {
-        const userIdentityUrl = "";
+        const userIdentityUrl = "http://localhost:23333/fetchUserIdentity/?uid=" + this.state.userId;
 
-        fetch(userIdentityUrl)
+        fetch(userIdentityUrl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     username: result.username,
-                    isSuspended: result.isSuspended
+                    isSuspended: result.suspended
                 });
             },
             (error) => {
-                // window.location.href = "/user/fail";
-                this.setState({
-                    username: "qieer",
-                    userId: "0123"
-                });
+                console.log(error)
+                window.location.href = "/user/fail";
             }
         )
     }
@@ -323,7 +329,7 @@ class NonAdminPage extends Component {
                     {body}
                 </div>
                 {this.state.showPopup ? <Popup userId={this.props.userId} onClose={this.onClose}></Popup> : null}
-                {this.state.showCart ? <CartPopup userId={this.state.userId} onClose={this.onCloseCart}></CartPopup> : null}
+                {this.state.showCart ? <CartPopup userId={this.props.userId} onClose={this.onCloseCart}></CartPopup> : null}
             </div>
         );
     }

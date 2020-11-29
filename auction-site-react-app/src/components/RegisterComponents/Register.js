@@ -25,8 +25,26 @@ class Register extends Component {
     handleSubmit(e) {
         e.preventDefault()
 
-        const url = "";
-        fetch(url)
+        const url = "http://localhost:23333/userCreate/";
+
+        var data = {
+            "username": this.state.username,
+            "email": this.state.email,
+            "password": this.state.password,
+            "user_bio": this.state.userBio
+        }
+
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(data),
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -55,6 +73,10 @@ class Register extends Component {
                         <div className="password-input">
                             <span>Password: </span>
                             <input name="password" type="text" onChange={e => this.handleChange(e)}></input>
+                        </div>
+                        <div className="password-input">
+                            <span>Bio: </span>
+                            <input name="userBio" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
                         <div>
                             <input className="register-submit-button" type ="submit" value="Register"></input>

@@ -16,49 +16,30 @@ class MyAuctions extends Component {
     }
 
     componentDidMount() {
-        const url = "http://localhost:9090/auction/offer/prevBids/" + this.state.userId;
+        const url = "" + this.state.userId;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     auctionListFetchSuccess: true,
-                    auctionList: result.auctionList
+                    auctionList: result.bidList
                 })
             },
             (error) => {
-                // window.location.href = "/myauctions/fail/" + this.state.userId;
-                this.setState({
-                    auctionListFetchSuccess: true,
-                    auctionList: []
-                })
+                window.location.href = "/myauctions/fail/" + this.state.userId;
             }
         )
-
-        // fetch(url, {
-        //     method: "GET",
-        //     mode: 'cors',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Accept :'application/json',
-        //         'Origin': 'http://localhost:3000'
-        //     },
-        //     referrerPolicy: 'no-referrer'
-        // })
-        // .then(res => res.json())
-        // .then(
-        //     (result) => {
-        //         console.log("auction list result", result)
-        //         this.setState({
-        //             auctionListFetchSuccess: true,
-        //             auctionList: result
-        //         })
-        //     },  
-        //     (error) => {
-        //         // window.location.href = "/myauctions/fail/" + this.state.userId;
-        //     }
-        // )
     }
 
     addAuction() {

@@ -24,22 +24,41 @@ class Login extends Component {
     handleSubmit(e) {
         e.preventDefault()
 
-        const url = "";
+        const url = "http://localhost:23333/login/";
 
-        fetch(url)
+        var data = {
+            "email": this.state.email,
+            "password": this.state.password
+        }
+
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(data),
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                // returns userid and usertype
-                // if a normal user
-                window.location.href = "/user/admin/12345";
+                if (result.status === "fail") {
+                    window.location.href = "/login/fail";
+                } else {
+                    let userId = result.user_id;
 
-                // if a admin
-                //window.location.href = "/admin";
+                    if (result.admin === false) {
+                        window.location.href = "/user/nonadmin/" + userId
+                    } else {
+                        window.location.href = "/user/admin/" + userId
+                    }
+                }
             },
             (error) => {
-                // window.location.href = "/login/fail";
-                window.location.href = "/user/admin/12345";
+                window.location.href = "/login/fail";
             }
         )
     }

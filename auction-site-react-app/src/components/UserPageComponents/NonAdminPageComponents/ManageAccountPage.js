@@ -19,44 +19,61 @@ class ManageAccountPage extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:23333/fetchUserIdentity/?uid=" + this.state.userId;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     username: result.username,
-                    email: result.username,
-                    isSuspended: result.isSuspended
+                    email: result.email,
+                    isSuspended: result.suspend
                 })
             },
             (error) => {
-                // window.location.href = "/user/fail";
-                this.setState({
-                    username: "qieer",
-                    email: "@",
-                    isSuspended: true
-                })
+                window.location.href = "/user/fail";
             }
         )
     }
 
     onSuspendClick() {
-        const suspendUrl = "";
+        const suspendUrl = "http://localhost:23333/userSuspend/?uid=" + this.state.userId;
 
-        fetch(suspendUrl)
+        fetch(suspendUrl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                if (this.state.isSuspended) {
-                    alert("Your account has been unsuspended successfully.")
+                if (result.status === "success") {
+                    if (this.state.isSuspended) {
+                        alert("Your account has been unsuspended successfully.")
+                    } else {
+                        alert("Your account has been suspended successfully.")
+                    }
+                    this.setState({
+                        isSuspended: !this.state.isSuspended
+                    })
                 } else {
-                    alert("Your account has been suspended successfully.")
+                    alert("Your attemp failed due to following reason: " + result.reason)
                 }
-                this.setState({
-                    isSuspended: !this.state.isSuspended
-                })
             },
             (error) => {
                 if (this.state.isSuspended) {
@@ -69,13 +86,26 @@ class ManageAccountPage extends Component {
     }
 
     onDeleteClick() {
-        const deleteUrl = "";
-        fetch(deleteUrl)
+        const deleteUrl = "http://localhost:23333/userDelete/?uid=" + this.state.userId;
+        fetch(deleteUrl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                alert("Your account has been deleted successfully. Now returning to homepage.")
-                window.location.href = "/";
+                if (result.status === "success") {
+                    alert("Your account has been deleted successfully. Now returning to homepage.")
+                    window.location.href = "/";
+                } else {
+                    alert("Your attempt failed due to the following reason: " + result.reason)
+                }
             },
             (error) => {
                 alert("An error occured when attempted to delete your account...")
@@ -122,11 +152,11 @@ class ManageAccountPage extends Component {
                         <form onSubmit={this.onUpdateSubmit}>
                             <div>
                                 <span>Username: </span>
-                                <input type="text" name="username" onChange={(e) => this.handleChange(e)}></input>
+                                <input value={this.state.username} type="text" name="username" onChange={(e) => this.handleChange(e)}></input>
                             </div>
                             <div>
                                 <span>Email: </span>
-                                <input type="text" name="email" onChange={(e) => this.handleChange(e)}></input>
+                                <input value={this.state.email} type="text" name="email" onChange={(e) => this.handleChange(e)}></input>
                             </div>
                             <div>
                                 <span>Password: </span>

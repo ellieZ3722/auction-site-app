@@ -7,7 +7,7 @@ class Watchlist extends Component {
         super(props);
 
         this.state = {
-            userId: props.userId,
+            userId: props.match.params.userid,
 
             fetchWatchlistStatus: "fetching",
             watchlist: [],
@@ -20,37 +20,29 @@ class Watchlist extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:23333/getItemsInWatchlist/?uid=" + this.state.userId;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     fetchWatchlistStatus: "success",
-                    watchlist: result.watchlist
+                    watchlist: result.records
                 })
             },
             (error) => {
-                // alert("An error occured when attempted to fetch your watchlist...")
-                // window.location.href = "/user/nonadmin/" + this.state.userId
-                this.setState({
-                    fetchWatchlistStatus: "success",
-                    watchlist: [
-                        {
-                            itemName: "item1",
-                            lessThan: 3453563
-                        },
-                        {
-                            itemName: "item1",
-                            lessThan: 3453563
-                        },
-                        {
-                            itemName: "item1",
-                            lessThan: 3453563
-                        }
-                    ]
-                })
+                alert("An error occured when attempted to fetch your watchlist...")
+                window.location.href = "/user/nonadmin/" + this.state.userId
 
             }
         )
@@ -77,8 +69,8 @@ class Watchlist extends Component {
             let list = this.state.watchlist.map(entry => {
                 return (
                     <div className="watchlist-row">
-                        <div className="watchlist-cell">{entry.itemName}</div>
-                        <div className="watchlist-cell">{entry.lessThan}</div>
+                        <div className="watchlist-cell">{entry.item_name}</div>
+                        <div className="watchlist-cell">{entry.criteria}</div>
                     </div>
                 )
             })
@@ -109,7 +101,7 @@ class Watchlist extends Component {
                     <button onClick={this.onClickAddWatchlist}>add to watchlist</button>
                     {body}
                 </div>
-                {this.state.showPopup ? <Popup onClose={this.onClose}></Popup> : null}
+                {this.state.showPopup ? <Popup userId={this.state.userId} onClose={this.onClose}></Popup> : null}
             </div>
         );
     }

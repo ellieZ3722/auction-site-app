@@ -18,15 +18,15 @@ class AuctionManagement extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:9090/auction/bidding/activeBids";
 
         fetch(url)
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
-                    ongoingAuctions: result.ongoingAuctions,
-                    closedAuctions: result.closedAuctions,
+                    ongoingAuctions: result.activeBidList,
+                    closedAuctions: result.closedBidList,
                     auctionListFetchedStatus: "success"
                 })
             },

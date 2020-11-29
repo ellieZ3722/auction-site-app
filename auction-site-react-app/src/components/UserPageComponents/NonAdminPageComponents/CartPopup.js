@@ -18,58 +18,81 @@ class CartPopup extends Component {
     }
 
     fetchCart() {
-        const url = "";
+        console.log(this.props.userId)
+        const url = "http://localhost:23334/getItemsInCart/?uid=" + this.props.userId;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     fetchCartStatus: "success",
-                    cart: result.cart
+                    cart: result.records
                 })
             },
             (error) => {
-                // alert("An error occured when attempted to fetch your auction window...")
-                // this.props.onClose()
-                this.setState({
-                    fetchCartStatus: "success",
-                    cart: [
-                        {   
-                            itemId: "23424",
-                            itemName: "001",
-                            winningPrice: 34535
-                        },
-                        {
-                            itemId: "23424",
-                            itemName: "001",
-                            winningPrice: 34535
-                        },
-                        {
-                            itemId: "23424",
-                            itemName: "001",
-                            winningPrice: 34535
-                        }
-                    ]
-                })
-
+                alert("An error occured when attempted to fetch your auction window...")
+                this.props.onClose()
             }
         )
     }
 
-    onClickCheckout(itemId) {
+    onClickCheckout() {
 
-        const url = "";
+        const url = "http://localhost:23334/checkout/?uid=" + this.props.userId;
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                alert("Your have successfully checked out the item.")
+                alert("Your have successfully checked out the items.")
                 this.fetchCart()
             },
             (error) => {
-                alert("An error happened when trying to check out the item...")
+                alert("An error happened when trying to check out the items...")
+            }
+        )
+    }
+
+    onClickDelete(id) {
+        const url = "http://localhost:23334/deleteItemInCart/?uid=" + this.props.userId + "&item_id=" + id;
+
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                alert("Your have successfully deleted the item.")
+                this.fetchCart()
+            },
+            (error) => {
+                alert("An error happened when trying to delete the item...")
             }
         )
     }
@@ -81,10 +104,10 @@ class CartPopup extends Component {
             let subbody = this.state.cart.map(entry => {
                 return (
                     <div className="window-list-row">
-                        <div className="window-list-cell">{entry.itemName}</div>
-                        <div className="window-list-cell">{entry.winningPrice}</div>
+                        <div className="window-list-cell">{entry.item_name}</div>
+                        <div className="window-list-cell">{entry.item_price}</div>
                         <div className="window-list-cell">
-                            <button onClick={() => this.onClickCheckout(entry.itemId)}>checkout</button>
+                            <button onClick={() => this.onClickDelete(entry.item_id)}>delete</button>
                         </div>
                     </div>
                 )
@@ -96,10 +119,11 @@ class CartPopup extends Component {
                         <div className="window-list-row">
                             <div className="window-list-cell">Item Name</div>
                             <div className="window-list-cell">Winning Price</div>
-                            <div className="window-list-cell"></div>
+                            <div className="window-list-cell">Delete Item</div>
                         </div>
                         {subbody}
                         <button onClick={this.props.onClose}>Back</button>
+                        <button onClick={() => this.onClickCheckout()}>checkout</button>
                     </div>
                 </div>
             )

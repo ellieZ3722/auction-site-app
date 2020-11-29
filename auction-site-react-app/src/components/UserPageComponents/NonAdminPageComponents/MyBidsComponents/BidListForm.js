@@ -12,40 +12,26 @@ class BidListForm extends Component {
             // bidList: props.bidList
             bidList: [
                 {   
-                    bidId: "12344",
+                    itemId: "1",
                     itemName: "item1",
-                    currentHighestBidPrice: 50,
-                    myCurrentBidPrice: 40,
-                    status: "won"
+                    currHighestPrice: 50,
+                    bidderOfferPrice: 40,
+                    bidStatus: "won"
                 },
-                {
-                    bidId: "12344",
+                {   
+                    itemId: "1",
                     itemName: "item1",
-                    currentHighestBidPrice: 50,
-                    myCurrentBidPrice: 40,
-                    status: "won"
+                    currHighestPrice: 50,
+                    bidderOfferPrice: 40,
+                    bidStatus: "closed"
                 },
-                {
-                    bidId: "12344",
+                {   
+                    itemId: "1",
                     itemName: "item1",
-                    currentHighestBidPrice: 50,
-                    myCurrentBidPrice: 40,
-                    status: "bidding"
+                    currHighestPrice: 50,
+                    bidderOfferPrice: 40,
+                    bidStatus: "bidding"
                 },
-                {
-                    bidId: "12344",
-                    itemName: "item1",
-                    currentHighestBidPrice: 50,
-                    myCurrentBidPrice: 40,
-                    status: "closed"
-                },
-                {
-                    bidId: "12344",
-                    itemName: "item1",
-                    currentHighestBidPrice: 50,
-                    myCurrentBidPrice: 40,
-                    status: "bidding"
-                }
             ]
         }
     }
@@ -54,7 +40,7 @@ class BidListForm extends Component {
         let form = this.state.bidList.map(entry => {
             // let bidId = entry.bidId;
             return (
-                <BidRow bid={entry}></BidRow>
+                <BidRow userId={this.state.userId} key={entry.bidId} bid={entry}></BidRow>
             )
         })
         
