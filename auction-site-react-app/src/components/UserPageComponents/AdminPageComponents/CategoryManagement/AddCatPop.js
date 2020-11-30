@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import "./Category.css";
 
-class Popup extends Component {
+class AddPopup extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            oldCatName: props.category.categoryName,
-            catName: props.category.categoryName,
+            catName: ""
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,11 +25,11 @@ class Popup extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const url = "http://localhost:8080/auction/item/update/category/" + this.state.oldCatName;
-        
+        const url = "http://localhost:8080/auction/item/create/category";
+
         var data = {
             "categoryId": this.state.catName,
-            "categoryName": this.state.catName  
+            "categoryName": this.state.catName
         }
 
         fetch(url, {
@@ -47,12 +46,12 @@ class Popup extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                alert("The category is modified successfully.")
+                alert("The category is created successfully.")
                 this.props.onClose();
                 window.location.reload();
             },
             (error) => {
-                alert("An error occured when attempted to modify the category...")
+                alert("An error occured when attempted to create the category...")
             }
         )
     }
@@ -64,10 +63,10 @@ class Popup extends Component {
                     <form onSubmit={e => this.handleSubmit(e)}>
                         <div>
                             <span>Category Name: </span>
-                            <input name="catName" value={this.state.catName} type="text" onChange={e => this.handleChange(e)}></input>
+                            <input name="catName" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
                         <div>
-                            <input type="submit" value="Modify"></input>
+                            <input type="submit" value="Add"></input>
                             <button onClick={this.props.onClose}>Cancel</button>
                         </div>
                     </form>
@@ -77,4 +76,4 @@ class Popup extends Component {
     }
 }
 
-export default Popup;
+export default AddPopup;

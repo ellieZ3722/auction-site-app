@@ -71,12 +71,24 @@
 .user-row {
   margin: auto;
   display: flex;
-  width: 70%;
+  width: 80%;
   height: 60px;
 }
 
 .user-cell {
-  width: 20%;
+  width: 16.666%;
+  padding: 15px;
+}
+
+.category-row {
+  margin: auto;
+  display: flex;
+  width: 80%;
+  height: 60px;
+}
+
+.category-cell {
+  width: 33.3333%;
   padding: 15px;
 }
 
@@ -92,12 +104,12 @@ body {
 .search-row {
   margin: auto;
   display: flex;
-  width: 70%;
+  width: 90%;
   height: 60px;
 }
 
 .search-cell {
-  width: 16.666666667%;
+  width: 10%;
   padding: 15px;
 }
 
@@ -141,4 +153,37 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.admin-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bid-history-row {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 70%;
+  height: 60px;
+}
+
+.bid-history-cell {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  padding: 15px;
+}
+
+.email-row {
+  margin: auto;
+  display: flex;
+  width: 70%;
+  height: 60px;
+}
+
+.email-cell {
+  width: 33.33333%;
+  padding: 15px;
 }

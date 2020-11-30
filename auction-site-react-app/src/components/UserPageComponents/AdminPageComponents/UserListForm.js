@@ -11,81 +11,105 @@ class UserListForm extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://127.0.0.1:23333/getUserList/";
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                this.setState({
-                    userListFetchStatus: "success",
-                    userList: result.userList
-                })
+                if (result.status === 'success') {
+                    this.setState({
+                        userListFetchStatus: "success",
+                        userList: result.users
+                    })
+                } else {
+                    this.setState({
+                        userListFetchStatus: "fail"
+                    })
+                }
             },
             (error) => {
-                // this.setState({
-                //     userListFetchStatus: "fail"
-                // })
                 this.setState({
-                    userListFetchStatus: "success",
-                    userList: [
-                        {
-                            userId: "345345",
-                            username: "user1",
-                            email: "@",
-                            isSuspended: true
-                        },
-                        {
-                            userId: "345315",
-                            username: "user2",
-                            email: "@",
-                            isSuspended: false
-                        },
-                        {
-                            userId: "346535",
-                            username: "user3",
-                            email: "@",
-                            isSuspended: false
-                        },
-                        {
-                            userId: "345356",
-                            username: "user4",
-                            email: "@",
-                            isSuspended: false
-                        },
-                    ]
+                    userListFetchStatus: "fail"
                 })
             }
         )
     }
 
-    suspend(isSuspend, userId) {
-        const url = "";
+    suspendOrUnsuspend(isSuspend, userId) {
+        if (!isSuspend) {
+            console.log(userId)
+            const url = "http://localhost:23333/userSuspend/?uid=" + userId;
 
-        fetch(url)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                if (isSuspend) {
-                    alert("The user has been unsuspended.")
-                } else {
+            fetch(url, {
+                method: "GET",
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept :'application/json',
+                    'Origin': 'http://localhost:3000'
+                },
+                referrerPolicy: 'no-referrer'
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
                     alert("The user has been suspended.")
-                }
-            },
-            (error) => {
-                if (isSuspend) {
-                    alert("An error occured when attempted to unsuspend the user.")
-                } else {
+                    window.location.reload()
+                },
+                (error) => {
                     alert("An error occured when attempted to suspend the user.")
                 }
-            }
-        )
+            )
+        } else {
+
+            const url = "http://localhost:23333/userUnSuspend/?uid=" + userId;
+
+            fetch(url, {
+                method: "GET",
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept :'application/json',
+                    'Origin': 'http://localhost:3000'
+                },
+                referrerPolicy: 'no-referrer'
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    alert("The user has been unsuspended.")
+                    window.location.reload()
+                },
+                (error) => {
+                    alert("An error occured when attempted to unsuspend the user.")
+                }
+            )
+        }
     }
 
     remove(userId) {
-        const url = "";
-
-        fetch(url)
+        const url = "http://localhost:23333/userDelete/?uid=" + userId;
+        console.log(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -93,6 +117,7 @@ class UserListForm extends Component {
                 window.location.reload(); 
             },
             (error) => {
+                console.log(error)
                 alert("An error occured when attempted to remove the user.");
             }
         )
@@ -103,15 +128,16 @@ class UserListForm extends Component {
         if (this.state.userListFetchStatus === "success") {
             let form = this.state.userList.map(entry => {
                 return (
-                    <div key={entry.userId} className="user-row">
-                        <div className="user-cell">{entry.userId}</div>
+                    <div key={entry.uid} className="user-row">
+                        <div className="user-cell">{entry.uid}</div>
+                        <div className="user-cell">{ entry.admin ? 'yes' : 'no'}</div>
                         <div className="user-cell">{entry.username}</div>
                         <div className="user-cell">{entry.email}</div>
                         <div className="user-cell">
-                            <button onClick={() => this.suspend(entry.isSuspended, entry.userId)}>{entry.isSuspended ? "Unsuspend" : "Suspend"}</button>
+                            <button onClick={() => this.suspendOrUnsuspend(entry.suspend, entry.uid)}>{entry.suspend ? "Unsuspend" : "Suspend"}</button>
                         </div>
                         <div className="user-cell">
-                            <button onClick={() => this.remove(entry.userId)}>Remove</button>
+                            <button onClick={() => this.remove(entry.uid)}>Remove</button>
                         </div>
                     </div>
                 )
@@ -120,6 +146,7 @@ class UserListForm extends Component {
                 <div>
                     <div className="user-row">
                         <div className="user-cell">User ID</div>
+                        <div className="user-cell">Is Admin</div>
                         <div className="user-cell">Username</div>
                         <div className="user-cell">Email</div>
                         <div className="user-cell">

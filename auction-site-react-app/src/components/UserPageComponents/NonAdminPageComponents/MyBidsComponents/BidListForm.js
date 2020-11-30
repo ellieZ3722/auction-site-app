@@ -9,30 +9,7 @@ class BidListForm extends Component {
         this.state = {
             userId: props.userId,
 
-            // bidList: props.bidList
-            bidList: [
-                {   
-                    itemId: "1",
-                    itemName: "item1",
-                    currHighestPrice: 50,
-                    bidderOfferPrice: 40,
-                    bidStatus: "won"
-                },
-                {   
-                    itemId: "1",
-                    itemName: "item1",
-                    currHighestPrice: 50,
-                    bidderOfferPrice: 40,
-                    bidStatus: "closed"
-                },
-                {   
-                    itemId: "1",
-                    itemName: "item1",
-                    currHighestPrice: 50,
-                    bidderOfferPrice: 40,
-                    bidStatus: "bidding"
-                },
-            ]
+            bidList: props.bidList
         }
     }
 
@@ -40,7 +17,7 @@ class BidListForm extends Component {
         let form = this.state.bidList.map(entry => {
             // let bidId = entry.bidId;
             return (
-                <BidRow userId={this.state.userId} key={entry.bidId} bid={entry}></BidRow>
+                <BidRow userId={this.state.userId} key={entry.itemId} bid={entry}></BidRow>
             )
         })
         

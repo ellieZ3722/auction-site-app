@@ -17,22 +17,26 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
-        const userIdentityUrl = "";
-        fetch(userIdentityUrl)
+        const userIdentityUrl = "http://localhost:23333/fetchUserIdentity/?uid=" + this.state.userId;
+        fetch(userIdentityUrl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     username: result.username,
-                    userId: result.userId
                 });
             },
             (error) => {
-                // window.location.href = "/user/fail";
-                this.setState({
-                    username: "qieer",
-                    userId: "0123"
-                });
+                window.location.href = "/user/fail";
             }
         )
     }

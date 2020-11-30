@@ -20,6 +20,32 @@ class BidRow extends Component {
         this.handleAddCart = this.handleAddCart.bind(this);
     }
 
+    componentDidMount() {
+        const url = "http://localhost:8080/auction/item/" + this.state.bidId;
+
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({
+                    itemName: result.name,
+                })
+            },
+            (error) => {
+                alert("Errors occured when retrieving your auctions...")
+            }
+        )
+    }
+
     onIncrementSubmit(e) {
         e.preventDefault();
 
@@ -55,14 +81,11 @@ class BidRow extends Component {
         .then(
             (result) => {
                 alert("Your've successfully placed a new bid on the item.")
-                this.setState({
-                    currentHighestBidPrice: this.state.newBidPrice,
-                    myCurrentBidPrice: this.state.newBidPrice
-                })
+                window.location.reload();
             },
             (error) => {
                 console.log(error)
-                alert("Your new bit is not successfully placed due to some errors...")
+                alert("Your new bid is not successfully placed due to some errors...")
             }
         )
     }

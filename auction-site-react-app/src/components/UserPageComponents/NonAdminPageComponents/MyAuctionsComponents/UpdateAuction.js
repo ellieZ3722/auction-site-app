@@ -10,7 +10,7 @@ class UpdateAuction extends Component {
             userId: props.match.params.userid,
             auctionId: props.match.params.auctionid,
 
-            itemName: '',
+            itemName: "",
             quantity: 0,
             shippingCosts: 0,
             buyNow: false,
@@ -26,7 +26,6 @@ class UpdateAuction extends Component {
 
     async componentDidMount() {
         const fetchAuctionUrl = "http://localhost:8080/auction/item/" + this.state.auctionId;
-        // const fetchAuctionUrl = "http://localhost:8080/auction/item/" + "4"
 
         await fetch(fetchAuctionUrl, {
             method: "GET",
@@ -47,21 +46,11 @@ class UpdateAuction extends Component {
                     itemName: result.name,
                     quantity: result.quantity,
                     shippingCosts: result.shippingCosts,
-                    buyNow: result.buyNow,
-                    buyNowPrice: result.buyNowPrice,
                     itemDescription: result.description
                 })
             },
             (error) => {
-                // window.location.href = "/updateauctionfail/" + this.state.userId;
-                this.setState({
-                    auctionId: "1236",
-                    quantity: 1,
-                    itemName: "item3",
-                    shippingCosts: 34535,
-                    buyNow: false,
-                    itemDescription: "Description..."
-                })
+                window.location.href = "/updateauctionfail/" + this.state.userId;
             }
         )
     }
@@ -116,13 +105,28 @@ class UpdateAuction extends Component {
     cancelAuction(e) {
         e.preventDefault();
 
+        console.log(this.state.auctionId)
+
         const cancelUrl = "http://localhost:8080/auction/item/delete/" + this.state.auctionId;
 
-        fetch(cancelUrl)
+        fetch(cancelUrl, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
-                alert("This auction has been cancelled.");
+                if (result.success) {
+                    alert("This auction has been cancelled.");
+                } else {
+                    alert("There are bids currently on the auction, it cannot be cancelled.");
+                }
                 window.location.href = "/myauctions/" + this.state.userId;
             },
             (error) => {

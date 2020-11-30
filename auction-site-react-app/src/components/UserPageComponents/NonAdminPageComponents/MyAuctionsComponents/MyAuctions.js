@@ -16,7 +16,7 @@ class MyAuctions extends Component {
     }
 
     componentDidMount() {
-        const url = "" + this.state.userId;
+        const url = "http://localhost:9090/auction/bidding/prevAuctions/" + this.state.userId;
 
         fetch(url, {
             method: "GET",
@@ -33,7 +33,7 @@ class MyAuctions extends Component {
             (result) => {
                 this.setState({
                     auctionListFetchSuccess: true,
-                    auctionList: result.bidList
+                    auctionList: result.prevAuctionList
                 })
             },
             (error) => {

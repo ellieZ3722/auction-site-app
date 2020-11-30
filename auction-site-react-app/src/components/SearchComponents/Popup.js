@@ -12,6 +12,7 @@ class Popup extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this)
         this.handleAddAuctionWindow = this.handleAddAuctionWindow.bind(this)
+        this.onClickFlag = this.onClickFlag.bind(this)
     }
 
     handleSubmit(e) {
@@ -20,10 +21,12 @@ class Popup extends Component {
         const url = "http://localhost:9090/auction/bidding/newOffer";
 
         var data = {
-            "itemId": this.props.entry.id,
+            "itemId": this.props.entry.item.id,
             "userId": this.props.userID,
             "newBidPrice": this.state.bidPrice
         }
+
+        console.log(data)
 
         fetch(url, {
             method: "POST",
@@ -44,6 +47,7 @@ class Popup extends Component {
                 window.location.reload();
             },
             (error) => {
+                console.log(error)
                 alert("An error occured when attempted to place the bid...")
             }
         )
@@ -62,14 +66,32 @@ class Popup extends Component {
     handleAddAuctionWindow(e) {
         e.preventDefault();
 
-        const url = "";
-        fetch(url)
+        const url = "http://localhost:9090/auction/bidding/countdown/create";
+
+        var data = {
+            "itemID": this.props.entry.item.id,
+            "userId": this.props.userID,
+            "itemName": this.props.entry.item.name,
+            "startTime": this.props.entry.startTime
+        }
+
+        console.log(data)
+
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(data),
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 alert("The item has been added to your auction window, see the countdown to its openning time there.")
-                this.props.onClose();
-                window.location.reload();
             },
             (error) => {
                 alert("An error occured when attempted to add the item to your auction window...")
@@ -81,7 +103,7 @@ class Popup extends Component {
         const url = "http://localhost:8080/auction/item/flagging";
 
         var data = {
-            "itemID": this.props.entry.id,
+            "itemID": this.props.entry.item.id,
             "userID": this.props.userID
         }
 
@@ -99,12 +121,10 @@ class Popup extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                alert("The item has been added to your auction window, see the countdown to its openning time there.")
-                this.props.onClose();
-                window.location.reload();
+                alert("The item has been flagged as inappropriate successfully.")
             },
             (error) => {
-                alert("An error occured when attempted to add the item to your auction window...")
+                alert("An error occured when attempted to flag the item...")
             }
         )
     }
@@ -112,7 +132,7 @@ class Popup extends Component {
     render() {
         let subbody;
 
-        if (this.props.entry.status === "opened") {
+        if (this.props.entry.bidStatus === "Open") {
             subbody = (
                 <div>
                     <form onSubmit={e => this.handleSubmit(e)}>
@@ -135,15 +155,15 @@ class Popup extends Component {
                 <div className="modal-content">
                     <div className="modal-entry">
                         <span>Item Name: </span>
-                        <div> {this.props.entry.name}</div>
+                        <div> {this.props.entry.item.name}</div>
                     </div>
                     <div className="modal-entry">
                         <span>Category: </span>
-                        <div> {this.props.entry.categoryId}</div>
+                        <div> {this.props.entry.item.categoryId}</div>
                     </div>
                     <div className="modal-entry">
                         <span>Item Description: </span>
-                        <div> {this.props.entry.description}</div>
+                        <div> {this.props.entry.item.description}</div>
                     </div>
                     <div className="modal-entry">
                         <span>Start Time: </span>
@@ -151,13 +171,15 @@ class Popup extends Component {
                     </div>
                     <div className="modal-entry">
                         <div>End Time: </div>
-                        <div> {this.props.entry.expireTime}</div>
+                        <div> {this.props.entry.endTime}</div>
                     </div>
                     <div className="modal-entry">
                         {subbody}
                     </div>
                     <div className="modal-entry">
                         <button onClick={this.onClickFlag}>Flag this item as inappropriate or counterfeit</button>
+                    </div>
+                    <div className="modal-entry">
                         <button onClick={this.props.onClose}>Cancel</button>
                     </div>
                 </div>

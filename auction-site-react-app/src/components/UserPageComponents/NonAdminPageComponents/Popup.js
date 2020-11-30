@@ -14,8 +14,7 @@ class Popup extends Component {
     }
 
     componentDidMount() {
-        // const url = "http://localhost:9090/auction/bidding/countdown/" + this.props.userId;
-        const url = ""
+        const url = "http://localhost:9090/auction/bidding/countdown/" + this.props.userId;
 
         fetch(url, {
             method: "GET",
@@ -32,49 +31,12 @@ class Popup extends Component {
             (result) => {
                 this.setState({
                     fetchWindowListStatus: "success",
-                    windowList: [
-                        {
-                            itemId: "001",
-                            itemName: "item1",
-                            startTime: "2020-11-29T17:49:00Z"
-                        },
-                        {
-                            itemId: "002",
-                            itemName: "item1",
-                            startTime: "2020-11-29T17:49:00Z"
-                        },
-                        {
-                            itemId: "003",
-                            itemName: "item1",
-                            startTime: "2020-11-29T17:49:00Z"
-                        }
-                    ]
+                    windowList: result.windowList
                 })
             },
             (error) => {
-                // alert("An error occured when attempted to fetch your auction window...")
-                // this.props.onClose()
-                this.setState({
-                    fetchWindowListStatus: "success",
-                    windowList: [
-                        {
-                            itemId: "001",
-                            itemName: "item1",
-                            startTime: "2020-12-29T17:49:00Z"
-                        },
-                        {
-                            itemId: "002",
-                            itemName: "item1",
-                            startTime: "2020-12-29T17:49:00Z"
-                        },
-                        {
-                            itemId: "003",
-                            itemName: "item1",
-                            startTime: "2020-12-29T17:49:00Z"
-                        }
-                    ]
-                })
-
+                alert("An error occured when attempted to fetch your auction window...")
+                this.props.onClose()
             }
         )
     }
@@ -87,7 +49,7 @@ class Popup extends Component {
                 var _date = new Date(entry.startTime);
 
                 return (
-                    <div className="window-list-row">
+                    <div key={entry.itemID} className="window-list-row">
                         <div className="window-list-cell">{entry.itemName}</div>
                         <div className="window-list-cell">
                             <Countdown date={_date}>Started</Countdown>

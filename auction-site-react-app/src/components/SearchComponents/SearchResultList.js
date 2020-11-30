@@ -28,7 +28,7 @@ class SearchResultList extends Component {
     }
 
     onCartClick(entry) {
-        const url = "";
+        const url = " http://localhost:23334/addItemToCart/?uid=" + this.props.userId + "&item_id=" + entry.item.id + "&price=" + entry.buyNowPrice;
 
         fetch(url)
         .then(res => res.json())
@@ -45,18 +45,19 @@ class SearchResultList extends Component {
     render() {
         let body = this.props.searchResult.map(entry => {
             return (
-                <div className="search-row">
-                    <div className="search-cell">{entry.name}</div>
-                    <div className="search-cell">{entry.quantity}</div>
+                <div key={entry.item.id} className="search-row">
+                    <div className="search-cell">{entry.item.name}</div>
+                    <div className="search-cell">{entry.item.quantity}</div>
                     <div className="search-cell">{entry.startTime}</div>
-                    <div className="search-cell">{entry.expireTime}</div>
-                    <div className="search-cell">{entry.startingPrice}</div>
+                    <div className="search-cell">{entry.endTime}</div>
+                    <div className="search-cell">{entry.bidStatus}</div>
+                    <div className="search-cell">{entry.initPrice}</div>
                     <div className="search-cell">{entry.currentHighestBid}</div>
                     <div className="search-cell">
                         <button onClick={() => this.onDetailClick(entry)}>Detail</button>
                     </div>
                     <div className="search-cell">
-                        { entry.buyNow ? <button onClick={() => this.onCartClick(entry)}>Add to cart for ${entry.buyNowPrice}</button> : null }
+                        { entry.canBuyNow ? <button onClick={() => this.onCartClick(entry)}>Add to cart for ${entry.buyNowPrice}</button> : null }
                     </div>
                 </div>
             )
@@ -70,6 +71,7 @@ class SearchResultList extends Component {
                         <div className="search-cell">Quantity</div>
                         <div className="search-cell">Start Time</div>
                         <div className="search-cell">End Time</div>
+                        <div className="search-cell">Auction Status</div>
                         <div className="search-cell">Start Price</div>
                         <div className="search-cell">Current Highest Bid</div>
                         <div className="search-cell">Detail</div>

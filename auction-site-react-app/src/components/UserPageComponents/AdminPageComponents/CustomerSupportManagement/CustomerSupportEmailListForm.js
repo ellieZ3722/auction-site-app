@@ -17,9 +17,18 @@ class CustomerSupportEmailListForm extends Component {
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:5000/notification/receive_email";
 
-        fetch(url)
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -35,34 +44,26 @@ class CustomerSupportEmailListForm extends Component {
                 this.setState({
                     emailFetchStatus: "success",
                     emailList: [
-                        {
-                            userId: "235343",
-                            receivedTime: "64747",
-                            emailTitle: "title1",
-                            content: "1111111111112143523534663463",
-                            replyStatus: false
+                        {   
+                            "from": "kanggua@gmail.com",
+                            "subject": "123123",
+                            "text": "123123213"
                         },
-                        {
-                            userId: "233463",
-                            receivedTime: "64747",
-                            emailTitle: "title2",
-                            content: "1111111111112143523534663463",
-                            replyStatus: false
+                        {   
+                            "from": "kanggua@gmail.com",
+                            "subject": "123123",
+                            "text": "123123213"
                         },
-                        {
-                            userId: "235343",
-                            receivedTime: "64747",
-                            emailTitle: "title3",
-                            content: "1111111111112143523534663463",
-                            replyStatus: false
+                        {   
+                            "from": "kanggua@gmail.com",
+                            "subject": "123123",
+                            "text": "123123213"
                         },
-                        {
-                            userId: "235463",
-                            receivedTime: "64747",
-                            emailTitle: "title4",
-                            content: "1111111111112143523534663463",
-                            replyStatus: false
-                        }
+                        {   
+                            "from": "kanggua@gmail.com",
+                            "subject": "123123",
+                            "text": "123123213"
+                        },
                     ]
                 })
             }
@@ -89,11 +90,12 @@ class CustomerSupportEmailListForm extends Component {
 
             let form = this.state.emailList.map(entry => {
                 return (
-                    <div key={entry.emailTitle} className="user-row" onClick={() => this.onClick(entry)}>
-                        <div className="user-cell">{entry.receivedTime}</div>
-                        <div className="user-cell">{entry.userId}</div>
-                        <div className="user-cell">{entry.emailTitle}</div>
-                        <div className="user-cell">{entry.replyStatus ? "Replied" : "Not Replied"}</div>
+                    <div key={entry.subject} className="email-row">
+                        <div className="email-cell">{entry.from}</div>
+                        <div className="email-cell">{entry.subject}</div>
+                        <div className="email-cell">
+                            <button onClick={() => this.onClick(entry)}>Reply</button>
+                        </div>
                     </div>
                 )
             })
@@ -101,11 +103,10 @@ class CustomerSupportEmailListForm extends Component {
             body = (
                 <div>
                     <div className="email-section-body">
-                        <div className="user-row">
-                            <div className="user-cell">Time</div>
-                            <div className="user-cell">User ID</div>
-                            <div className="user-cell">Email Title</div>
-                            <div className="user-cell">Reply Status</div>
+                        <div className="email-row">
+                            <div className="email-cell">From</div>
+                            <div className="email-cell">Email Title</div>
+                            <div className="email-cell">Reply</div>
                         </div>
                         {form}
                     </div>

@@ -50,7 +50,6 @@ class NonAdminPage extends Component {
                 });
             },
             (error) => {
-                console.log(error)
                 window.location.href = "/user/fail";
             }
         )
@@ -112,96 +111,11 @@ class NonAdminPage extends Component {
                 console.log("search result", result)
                 this.setState({
                     showSearchResult: true,
-                    // searchResult: result
-                    searchResult: [
-                                {
-                                    itemName: "item1",
-                                    startingPrice: 2342342,
-                                    currentHighestBid: 34535,
-                                    startTime: "sdfsfs",
-                                    expireTime: "32425242",
-                                    shippingCost: "sdfrsf", 
-                                    buyNow: false,
-                                    itemDescription: "sfsfsdf",
-                                    sellerRating: "A",
-                                    status: "opened",
-                                    buyNowPrice: 435
-                                },
-                                {
-                                    itemName: "item1",
-                                    startingPrice: 2342342,
-                                    currentHighestBid: 34535,
-                                    startTime: "sdfsfs",
-                                    expireTime: "32425242",
-                                    shippingCost: "sdfrsf",
-                                    buyNow: true,
-                                    itemDescription: "sfsfsdf",
-                                    sellerRating: "A",
-                                    status: "opened",
-                                    buyNowPrice: 435
-                                },
-                                {
-                                    itemName: "item1",
-                                    startingPrice: 2342342,
-                                    currentHighestBid: 34535,
-                                    startTime: "sdfsfs",
-                                    expireTime: "32425242",
-                                    shippingCost: "sdfrsf",
-                                    buyNow: true,
-                                    itemDescription: "sfsfsdf",
-                                    sellerRating: "A",
-                                    status: "waiting",
-                                    buyNowPrice: 435
-                                },
-                            ]
+                    searchResult: result.searchResults
                 })
             },  
             (error) => {
                 alert("Some errors occured during the searching, please retry...");
-                // this.setState({
-                //     showSearchResult: true,
-                //     searchResult: [
-                //         {
-                //             itemName: "item1",
-                //             startingPrice: 2342342,
-                //             currentHighestBid: 34535,
-                //             startTime: "sdfsfs",
-                //             expireTime: "32425242",
-                //             shippingCost: "sdfrsf", 
-                //             buyNow: false,
-                //             itemDescription: "sfsfsdf",
-                //             sellerRating: "A",
-                //             status: "opened",
-                //             buyNowPrice: 435
-                //         },
-                //         {
-                //             itemName: "item1",
-                //             startingPrice: 2342342,
-                //             currentHighestBid: 34535,
-                //             startTime: "sdfsfs",
-                //             expireTime: "32425242",
-                //             shippingCost: "sdfrsf",
-                //             buyNow: true,
-                //             itemDescription: "sfsfsdf",
-                //             sellerRating: "A",
-                //             status: "opened",
-                //             buyNowPrice: 435
-                //         },
-                //         {
-                //             itemName: "item1",
-                //             startingPrice: 2342342,
-                //             currentHighestBid: 34535,
-                //             startTime: "sdfsfs",
-                //             expireTime: "32425242",
-                //             shippingCost: "sdfrsf",
-                //             buyNow: true,
-                //             itemDescription: "sfsfsdf",
-                //             sellerRating: "A",
-                //             status: "waiting",
-                //             buyNowPrice: 435
-                //         },
-                //     ]
-                // })
             }
         )
     }
@@ -226,10 +140,9 @@ class NonAdminPage extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log("search result", result)
                 this.setState({
                     showSearchResult: true,
-                    searchResult: result
+                    searchResult: result.searchResults
                 })
             },  
             (error) => {

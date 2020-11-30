@@ -6,38 +6,54 @@ class AuctionRow extends Component {
         super(props);
 
         this.state = {
-            auctionId: props.auction.auctionId,
+            auctionId: props.auction.itemId,
 
-            itemName: props.auction.itemName,
-            startPrice: props.auction.startPrice,
+            itemName: "",
             startTime: props.auction.startTime,
-            quantity: props.auction.quantity,
-            timeExpire: props.auction.timeExpire,
-            shippingCosts: props.auction.shippingCosts,
-            buyNow: props.auction.buyNow,
-            itemDescription: props.auction.itemDescription,
-            sellerRating: props.auction.sellerRating,
-            status: props.auction.status,
-            categories: props.auction.categories,
+            quantity: "",
+            timeExpire: props.auction.endTime,
+            shippingCosts: "",
+            buyNow: props.auction.canBuyNow,
+            itemDescription: "",
+            status: props.auction.bidStatus,
             bidCount: props.auction.bidCount,
-            buyNowPrice: props.auction.buyNowPrice
+            buyNowPrice: 0
         }
     }
 
-    render() {
-        let categories = "";
-        for (var i = 0; i < this.state.categories.length; i++) {
-            categories = categories + this.state.categories[i];
-            if (i !== this.state.categories.length - 1) {
-                categories = categories + " / ";
+    componentDidMount() {
+        const url = "http://localhost:8080/auction/item/" + this.state.auctionId;
+
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({
+                    itemName: result.name,
+                    quantity: result.quantity,
+                    shippingCosts: result.shippingCosts,
+                    itemDescription: result.description
+                })
+            },
+            (error) => {
             }
-        }
+        )
+    }
+
+    render() {
 
         return (
             <div className="auction-row" onClick={this.props.onClick}>
                 <div className="auction-cell">{this.state.itemName}</div>
-                <div className="auction-cell">{categories}</div>
-                <div className="auction-cell">{this.state.startPrice}</div>
                 <div className="auction-cell">{this.state.startTime}</div>
                 <div className="auction-cell">{this.state.timeExpire}</div>
                 <div className="auction-cell">{this.state.status}</div>
@@ -46,7 +62,6 @@ class AuctionRow extends Component {
                 <div className="auction-cell">{this.state.buyNow ? "Available" : "Not Available"}</div>
                 <div className="auction-cell">{this.state.buyNow ? this.state.buyNowPrice : null }</div>
                 <div className="auction-cell">{this.state.itemDescription}</div>
-                <div className="auction-cell">{this.state.sellerRating}</div>
                 <div className="auction-cell">{this.state.bidCount}</div>
             </div>
         );

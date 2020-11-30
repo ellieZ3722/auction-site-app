@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 class Register extends Component {
     constructor(props) {
@@ -6,10 +8,12 @@ class Register extends Component {
         this.state = {
             username: "",
             email: "",
-            password: ""
+            password: "",
+            admin: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onClickAdmin = this.onClickAdmin.bind(this);
     }
 
     handleChange(e) {
@@ -31,7 +35,8 @@ class Register extends Component {
             "username": this.state.username,
             "email": this.state.email,
             "password": this.state.password,
-            "user_bio": this.state.userBio
+            "user_bio": this.state.userBio,
+            "admin": this.state.admin
         }
 
         fetch(url, {
@@ -56,6 +61,12 @@ class Register extends Component {
         )
     }
 
+    onClickAdmin(bool) {
+        this.setState({
+            admin: bool
+        })
+    }
+
     render() {
         return (
             <div>
@@ -78,9 +89,24 @@ class Register extends Component {
                             <span>Bio: </span>
                             <input name="userBio" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
+                        <div className="admin-input">
+                            <span>Admin: </span>
+                            <Dropdown key={'Primary'}>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    options
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => this.onClickAdmin(true)}>Yes</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.onClickAdmin(false)}>No</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
                         <div>
                             <input className="register-submit-button" type ="submit" value="Register"></input>
                         </div>
+                        <Link to='/login'>
+                            <button>Already have an account? Login here</button>
+                        </Link>
                     </form>
                 </div>
             </div>

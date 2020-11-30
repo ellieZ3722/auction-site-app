@@ -51,7 +51,7 @@ class CartPopup extends Component {
         const url = "http://localhost:23334/checkout/?uid=" + this.props.userId;
 
         fetch(url, {
-            method: "GET",
+            method: "POST",
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -67,6 +67,7 @@ class CartPopup extends Component {
                 this.fetchCart()
             },
             (error) => {
+                console.log(error)
                 alert("An error happened when trying to check out the items...")
             }
         )

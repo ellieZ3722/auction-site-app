@@ -10,7 +10,8 @@ class AuctionManagement extends Component {
             showingPanel: "ongoingAuctions",
             ongoingAuctions: [],
             closedAuctions: [],
-            auctionListFetchedStatus: "fetching",
+            auctionListFetchedStatusOngoing: "fetching",
+            auctionListFetchedStatusClosed: "fetching",
         }
 
         this.clickOngoingAuctions = this.clickOngoingAuctions.bind(this);
@@ -18,84 +19,56 @@ class AuctionManagement extends Component {
     }
 
     componentDidMount() {
-        const url = "http://localhost:9090/auction/bidding/activeBids";
+        const ourl = "http://localhost:9090/auction/bidding//activeBids";
 
-        fetch(url)
+        fetch(ourl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     ongoingAuctions: result.activeBidList,
-                    closedAuctions: result.closedBidList,
-                    auctionListFetchedStatus: "success"
+                    auctionListFetchedStatusOngoing: "success"
                 })
             },
             (error) => {
-                // this.setState({
-                //     auctionListFetchedStatus: "fail"
-                // })
                 this.setState({
-                    ongoingAuctions: [
-                        {   
-                            auctionId: "1234",
-                            itemName: "item1",
-                            startPrice: 0,
-                            startTime: "7/8/2020",
-                            quantity: 1,
-                            timeExpire: "8/8/2020",
-                            shippingCosts: "$12",
-                            buyNow: false,
-                            itemDescription: "Description...",
-                            sellerRating: "A",
-                            status: "Started",
-                            categories: ["cat1", "cat2", "cat3"]
-                        },
-                        {
-                            auctionId: "1235",
-                            itemName: "item2",
-                            startPrice: 0,
-                            startTime: "7/8/2020",
-                            quantity: 1,
-                            timeExpire: "8/8/2020",
-                            shippingCosts: "$12",
-                            buyNow: true,
-                            itemDescription: "Description...",
-                            sellerRating: "A",
-                            status: "Not Started",
-                            categories: ["cat1", "cat2", "cat3"]
-                        },
-                    ],
-                    closedAuctions: [
-                        {   
-                            auctionId: "1234",
-                            itemName: "item3",
-                            startPrice: 0,
-                            startTime: "7/8/2020",
-                            quantity: 1,
-                            timeExpire: "8/8/2020",
-                            shippingCosts: "$12",
-                            buyNow: false,
-                            itemDescription: "Description...",
-                            sellerRating: "A",
-                            status: "Started",
-                            categories: ["cat1", "cat2", "cat3"]
-                        },
-                        {
-                            auctionId: "1235",
-                            itemName: "item4",
-                            startPrice: 0,
-                            startTime: "7/8/2020",
-                            quantity: 1,
-                            timeExpire: "8/8/2020",
-                            shippingCosts: "$12",
-                            buyNow: true,
-                            itemDescription: "Description...",
-                            sellerRating: "A",
-                            status: "Not Started",
-                            categories: ["cat1", "cat2", "cat3"]
-                        },
-                    ],
-                    auctionListFetchedStatus: "success"
+                    auctionListFetchedStatusOngoing: "fail"
+                })
+            }
+        )
+
+        const curl = "http://localhost:9090/auction/bidding/closedBids";
+
+        fetch(curl, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({
+                    closedAuctions: result.closedBidList,
+                    auctionListFetchedStatusClosed: "success"
+                })
+            },
+            (error) => {
+                this.setState({
+                    auctionListFetchedStatusClosed: "fail"
                 })
             }
         )
@@ -123,14 +96,7 @@ class AuctionManagement extends Component {
             form = <ClosedAuctionListForm type="closedAuctions" auctionList={this.state.closedAuctions}></ClosedAuctionListForm>
         }
 
-        if (this.state.auctionListFetchedStatus === "fail") {
-            body = (
-                <div>
-                    <p>The auction list is fetched unsuccessfully.</p>
-                    <button onClick={this.Reload}>Reload</button>
-                </div>
-            )
-        } else if (this.state.auctionListFetchedStatus === "success") {
+        if (this.state.auctionListFetchedStatusOngoing === "success" && this.state.auctionListFetchedStatusClosed === "success") {
             body = (
                 <div>
                     <div className="admin-auction-buttons">

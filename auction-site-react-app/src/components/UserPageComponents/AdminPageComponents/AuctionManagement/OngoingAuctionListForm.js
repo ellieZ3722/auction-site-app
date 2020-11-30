@@ -46,21 +46,14 @@ class OngoingAuctionListForm extends Component {
     render() {
         let body;
         body = this.state.auctionList.map(entry => {
-            let categories = "";
-            for (var i = 0; i < entry.categories.length; i++) {
-                categories = categories + entry.categories[i];
-                if (i !== entry.categories.length - 1) {
-                    categories = categories + " / ";
-                }
-            }
 
             return (
-                <div key={entry.auctionId} className="auction-row">
-                    <div className="auction-cell">{entry.itenId}</div>
-                    <div className="auction-cell">{entry.itemName}</div>
+                <div key={entry.itemId} className="auction-row">
+                    <div className="auction-cell">{entry.itemId}</div>
                     <div className="auction-cell">{entry.startTime}</div>
                     <div className="auction-cell">{entry.endTime}</div>
                     <div className="auction-cell">{entry.canBuyNow ? "Available" : "Not Available"}</div>
+                    <div className="auction-cell">{entry.bidStatus}</div>
                     <div className="auction-cell">
                         <button onClick={() => this.stopAuction(entry.auctionId)}>Stop</button>
                     </div>
@@ -72,10 +65,10 @@ class OngoingAuctionListForm extends Component {
             <div>
                 <div className="auction-row">
                     <div className="auction-cell">Auction Id</div>
-                    <div className="auction-cell">Item Name</div>
                     <div className="auction-cell">Start Time</div>
                     <div className="auction-cell">Expire Time</div>
                     <div className="auction-cell">Buynow</div>
+                    <div className="auction-cell">Auction Status</div>
                     <div className="auction-cell">
                         Stop Auction
                     </div>

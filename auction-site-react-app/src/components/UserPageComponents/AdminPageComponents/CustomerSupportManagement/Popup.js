@@ -6,6 +6,7 @@ class Popup extends Component {
         super(props);
 
         this.state = {
+            replyTitle: "Enter your subject...",
             replyContent: "Enter your reply...",
             showReplyPanel: false
         }
@@ -17,8 +18,25 @@ class Popup extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const url = "";
-        fetch(url)
+        const url = "http://localhost:5000/notification/reply_email";
+
+        var data = {
+            "email_to": this.props.email.from,
+            "subject": this.state.replyTitle,
+            "text": this.state.replyContent
+        }
+
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify(data),
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -52,9 +70,10 @@ class Popup extends Component {
         let replyPanel = (
             <div>
                 <form onSubmit={e => this.handleSubmit(e)} id="replyForm">
+                    <input name="replyTitle" onChange={e => this.handleChange(e)} value={this.state.replyTitle}></input>
                     <textarea name="replyContent" form="replyForm" onChange={e => this.handleChange(e)} value={this.state.replyContent} />
                     <div>
-                        <input type="submit" value="Modify"></input>
+                        <input type="submit" value="Send"></input>
                         <button onClick={this.props.onClose}>Cancel</button>
                     </div>
                 </form>
@@ -66,21 +85,22 @@ class Popup extends Component {
                 <div className="modal-content">
                     <div className="modal-entry">
                         <span>Title: </span>
-                        <div>{this.props.email.emailTitle}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <span>Time Received: </span>
-                        <div>{this.props.email.receivedTime}</div>
+                        <div>{this.props.email.subject}</div>
                     </div>
                     <div className="modal-entry">
                         <span>User ID: </span>
-                        <div>{this.props.email.userId}</div>
+                        <div>{this.props.email.from}</div>
                     </div>
                     <div className="modal-entry">
                         <div>Content: </div>
-                        <div>{this.props.email.content}</div>
+                        <div>{this.props.email.text}</div>
                     </div>
-                    { this.state.showReplyPanel ? null : <button onClick={this.handleReply}>Reply</button> }
+                    { this.state.showReplyPanel ? null : (
+                        <div>
+                            <button onClick={this.handleReply}>Reply</button>
+                            <button onClick={this.props.onClose}>Cancel</button>
+                        </div>
+                        ) }
                     { this.state.showReplyPanel ? replyPanel : null }
                 </div>
             </div>

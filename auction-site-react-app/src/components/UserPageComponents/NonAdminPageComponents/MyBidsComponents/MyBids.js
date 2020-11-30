@@ -31,7 +31,7 @@ class MyBids extends Component {
             (result) => {
                 this.setState({
                     bidListFetchSuccess: true,
-                    bidList: result.bidList
+                    bidList: result.prevBidsList
                 })
             },
             (error) => {

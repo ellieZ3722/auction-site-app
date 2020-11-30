@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Popup from "./Popup";
 import "./Category.css";
+import AddPopup from './AddCatPop';
 
 class CategoriesListForm extends Component {
     constructor(props) {
@@ -10,67 +11,41 @@ class CategoriesListForm extends Component {
             categoriesFetchStatus: "fetching",
             categoriesList: [],
             showPopup: false,
-            selectedCat: null
+            selectedCat: null,
+
+            showAddPop: false
         }
 
+        this.modifyCat = this.modifyCat.bind(this);
         this.onPopupClose = this.onPopupClose.bind(this);
+        this.addCat = this.addCat.bind(this);
+        this.onCloseAdd = this.onCloseAdd.bind(this);
     }
 
     componentDidMount() {
-        const url = "";
+        const url = "http://localhost:8080/auction/item/category/all";
 
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
                 this.setState({
                     categoriesFetchStatus: 'success',
-                    categoriesList: result.categoriesList
+                    categoriesList: result.categoryList
                 })
             },
             (error) => {
-                // this.setState({
-                //     categoriesFetchStatus: "fail"
-                // })
                 this.setState({
-                    categoriesFetchStatus: 'success',
-                    categoriesList: [
-                        {
-                            categoryName: "cat1",
-                            categoryId: "23534643",
-                            itemList: [
-                                "4353535", "0980"
-                            ]
-                        },
-                        {
-                            categoryName: "cat2",
-                            categoryId: "23534643",
-                            itemList: [
-                                "4353535", "0980"
-                            ]
-                        },
-                        {
-                            categoryName: "cat3",
-                            categoryId: "23534643",
-                            itemList: [
-                                "4353535", "0980"
-                            ]
-                        },
-                        {
-                            categoryName: "cat4",
-                            categoryId: "23534643",
-                            itemList: [
-                                "4353535", "0980"
-                            ]
-                        },
-                        {
-                            categoryName: "cat5",
-                            categoryId: "23534643",
-                            itemList: [
-                                "4353535", "0980"
-                            ]
-                        }
-                    ]
+                    categoriesFetchStatus: "fail"
                 })
             }
         )
@@ -90,9 +65,18 @@ class CategoriesListForm extends Component {
     }
 
     removeCat(catId) {
-        const url = "";
+        const url = "http://localhost:8080/auction/item/delete/category/" + catId;
 
-        fetch(url)
+        fetch(url, {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept :'application/json',
+                'Origin': 'http://localhost:3000'
+            },
+            referrerPolicy: 'no-referrer'
+        })
         .then(res => res.json())
         .then(
             (result) => {
@@ -105,30 +89,32 @@ class CategoriesListForm extends Component {
         )
     }
 
+    addCat() {
+        this.setState({
+            showAddPop: true
+        })
+    }
+
+    onCloseAdd() {
+        this.setState({
+            showAddPop: false
+        })
+    }
+
     render() {
         let body;
 
         if (this.state.categoriesFetchStatus === "success") {
 
             let form = this.state.categoriesList.map(entry => {
-                let items = "";
-                const itemList = entry.itemList;
-                for (var i = 0; i < itemList.length; i++) {
-                    items = items + itemList[i];
-                    if (i !== itemList.length - 1) {
-                        items = items + ", "
-                    }
-                }
 
                 return (
-                    <div key={entry.categoryName} className="user-row">
-                        <div className="user-cell">{entry.categoryName}</div>
-                        <div className="user-cell">{entry.categoryId}</div>
-                        <div className="user-cell">{items}</div>
-                        <div className="user-cell">
+                    <div key={entry.categoryName} className="category-row">
+                        <div className="category-cell">{entry.categoryName}</div>
+                        <div className="category-cell">
                             <button onClick={() => this.modifyCat(entry)}>modify</button>
                         </div>
-                        <div className="user-cell">
+                        <div className="category-cell">
                             <button onClick={() => this.removeCat(entry.categoryId)}>remove</button>
                         </div>
                     </div>
@@ -138,17 +124,16 @@ class CategoriesListForm extends Component {
             body = (
                 <div>
                     <div className="category-body">
-                        <div className="user-row">
-                            <div className="user-cell">Category Name</div>
-                            <div className="user-cell">Category ID</div>
-                            <div className="user-cell">Items</div>
-                            <div className="user-cell">Modify</div>
-                            <div className="user-cell">Remove</div>
+                        <button onClick={this.addCat}>Add a new category</button>
+                        <div className="category-row">
+                            <div className="category-cell">Category Name</div>
+                            <div className="category-cell">Modify</div>
+                            <div className="category-cell">Remove</div>
                         </div>
                         {form}
                     </div>
                     {this.state.showPopup ? <Popup category={this.state.selectedCat} onClose={this.onPopupClose}></Popup> : null }
-                    
+                    {this.state.showAddPop ? <AddPopup onClose={this.onCloseAdd}></AddPopup> : null }
                 </div>
             )
 
