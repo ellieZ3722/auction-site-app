@@ -199,7 +199,7 @@ body {
 
 .header-title {
   font-size: 40px;
-  font-weight: bold;
+  /* font-weight: bold; */
   margin-top: 60px;
   /* margin-bottom: 60px; */
   color: white;

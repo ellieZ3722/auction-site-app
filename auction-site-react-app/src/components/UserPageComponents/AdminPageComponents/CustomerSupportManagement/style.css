@@ -17,12 +17,12 @@
   border: 2px solid black;
 }
 
-.email-section-body {
+/* .email-section-body {
   position: absolute;
   top: 45%;
   width: 100%;
   text-align: center;
-}
+} */
 
 .modal-entry {
   display: flex;

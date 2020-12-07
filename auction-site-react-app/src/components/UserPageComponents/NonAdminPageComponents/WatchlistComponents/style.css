@@ -17,13 +17,6 @@
   border: 2px solid black;
 }
 
-.watchlist-body {
-  position: absolute;
-  /* top: 10%; */
-  width: 100%;
-  text-align: center;
-}
-
 .modal-entry {
   display: flex;
 }

@@ -42,6 +42,7 @@ class CustomerSupportEmailListForm extends Component {
                 // this.setState({
                 //     emailFetchStatus: "fail"
                 // })
+                console.log(error)
                 this.setState({
                     emailFetchStatus: "success",
                     emailList: [
