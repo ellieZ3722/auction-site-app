@@ -65,7 +65,8 @@ class ListAuction extends Component {
             "description": this.state.itemDescription,
             "name": this.state.name,
             "categoryId": this.state.category,
-            "isFlagged": false
+            "isFlagged": false,
+            "shippingCosts": this.state.shippingCosts
         }   
 
         let itemID = "";

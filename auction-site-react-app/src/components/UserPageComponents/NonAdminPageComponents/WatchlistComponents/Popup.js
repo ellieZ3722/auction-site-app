@@ -6,7 +6,7 @@ class Popup extends Component {
         super(props);
 
         this.state = {
-            itemName: "",
+            itemId: "",
             lessThanPrice: 0
         }
 
@@ -17,7 +17,8 @@ class Popup extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const url = "http://localhost:23333/addItemToWatchlist/?uid=" + this.props.userId + "&item_id="+ "" + "&criteria=" + this.state.lessThanPrice;
+        const url = "http://localhost:23333/addItemToWatchlist/?uid=" + this.props.userId + "&item_id="+ this.state.itemId + "&criteria=" + this.state.lessThanPrice;
+        console.log(url)
         fetch(url, {
             method: "GET",
             mode: 'cors',
@@ -36,6 +37,7 @@ class Popup extends Component {
                 window.location.reload();
             },
             (error) => {
+                console.log(error)
                 alert("An error occured when attempted to add to your watchlist...")
             }
         )
@@ -58,7 +60,7 @@ class Popup extends Component {
                     <form onSubmit={e => this.handleSubmit(e)}>
                         <div className="modal-entry">
                             <span>Item Name: </span>
-                            <input name="itemName" type="text" onChange={e => this.handleChange(e)}></input>
+                            <input name="itemId" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
                         <div className="modal-entry">
                             <span>Notify when price less than: </span>

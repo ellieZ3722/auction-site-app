@@ -68,7 +68,7 @@ class Watchlist extends Component {
         if (this.state.fetchWatchlistStatus === "success") {
             let list = this.state.watchlist.map(entry => {
                 return (
-                    <div className="watchlist-row">
+                    <div key={entry.item_name} className="watchlist-row">
                         <div className="watchlist-cell">{entry.item_name}</div>
                         <div className="watchlist-cell">{entry.criteria}</div>
                     </div>

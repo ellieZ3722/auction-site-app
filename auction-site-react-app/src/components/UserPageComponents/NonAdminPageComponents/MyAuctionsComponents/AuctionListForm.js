@@ -23,7 +23,7 @@ class AuctionListForm extends Component {
 
             if (entry.bidStatus !== "Closed") {
                 return (
-                    <AuctionRow key={entry.auctionId} onClick={() => this.updateAuction(auctionId)} auction={entry}></AuctionRow>
+                    <AuctionRow key={entry.itemId} onClick={() => this.updateAuction(auctionId)} auction={entry}></AuctionRow>
                 )
             } else {
                 return (<div></div>);

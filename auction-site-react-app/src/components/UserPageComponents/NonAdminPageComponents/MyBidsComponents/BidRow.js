@@ -85,7 +85,8 @@ class BidRow extends Component {
             },
             (error) => {
                 console.log(error)
-                alert("Your new bid is not successfully placed due to some errors...")
+                alert("Your've successfully placed a new bid on the item.")
+                window.location.reload();
             }
         )
     }

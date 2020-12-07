@@ -17,7 +17,7 @@ class AuctionRow extends Component {
             itemDescription: "",
             status: props.auction.bidStatus,
             bidCount: props.auction.bidCount,
-            buyNowPrice: 0
+            buyNowPrice: props.auction.buyNowPrice
         }
     }
 

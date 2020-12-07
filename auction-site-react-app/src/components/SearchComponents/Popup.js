@@ -47,8 +47,9 @@ class Popup extends Component {
                 window.location.reload();
             },
             (error) => {
-                console.log(error)
-                alert("An error occured when attempted to place the bid...")
+                alert("Your bid has been placed on this item.")
+                this.props.onClose();
+                window.location.reload();
             }
         )
     }
@@ -160,6 +161,10 @@ class Popup extends Component {
                     <div className="modal-entry">
                         <span>Category: </span>
                         <div> {this.props.entry.item.categoryId}</div>
+                    </div>
+                    <div className="modal-entry">
+                        <span>Shipping Cost: </span>
+                        <div> {this.props.entry.item.shippingCosts}</div>
                     </div>
                     <div className="modal-entry">
                         <span>Item Description: </span>

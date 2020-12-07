@@ -27,6 +27,7 @@ class UserListForm extends Component {
         .then(
             (result) => {
                 if (result.status === 'success') {
+                    result.users.sort(function(a, b) {return a.uid - b.uid});
                     this.setState({
                         userListFetchStatus: "success",
                         userList: result.users

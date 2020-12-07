@@ -38,33 +38,8 @@ class CustomerSupportEmailListForm extends Component {
                 })
             },
             (error) => {
-                // this.setState({
-                //     emailFetchStatus: "fail"
-                // })
                 this.setState({
-                    emailFetchStatus: "success",
-                    emailList: [
-                        {   
-                            "from": "kanggua@gmail.com",
-                            "subject": "123123",
-                            "text": "123123213"
-                        },
-                        {   
-                            "from": "kanggua@gmail.com",
-                            "subject": "123123",
-                            "text": "123123213"
-                        },
-                        {   
-                            "from": "kanggua@gmail.com",
-                            "subject": "123123",
-                            "text": "123123213"
-                        },
-                        {   
-                            "from": "kanggua@gmail.com",
-                            "subject": "123123",
-                            "text": "123123213"
-                        },
-                    ]
+                    emailFetchStatus: "fail"
                 })
             }
         )

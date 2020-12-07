@@ -20,6 +20,7 @@ class CartPopup extends Component {
     fetchCart() {
         console.log(this.props.userId)
         const url = "http://localhost:23334/getItemsInCart/?uid=" + this.props.userId;
+        console.log(url)
 
         fetch(url, {
             method: "GET",
@@ -40,7 +41,7 @@ class CartPopup extends Component {
                 })
             },
             (error) => {
-                alert("An error occured when attempted to fetch your auction window...")
+                alert("An error occured when attempted to fetch your cart...")
                 this.props.onClose()
             }
         )
@@ -75,6 +76,7 @@ class CartPopup extends Component {
 
     onClickDelete(id) {
         const url = "http://localhost:23334/deleteItemInCart/?uid=" + this.props.userId + "&item_id=" + id;
+        console.log(url)
 
         fetch(url, {
             method: "GET",
@@ -89,8 +91,12 @@ class CartPopup extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                alert("Your have successfully deleted the item.")
-                this.fetchCart()
+                if (result.status === 'fail') {
+                    alert("An error happened when trying to delete the item...")
+                } else {
+                    alert("Your have successfully deleted the item.")
+                    this.fetchCart()
+                }
             },
             (error) => {
                 alert("An error happened when trying to delete the item...")

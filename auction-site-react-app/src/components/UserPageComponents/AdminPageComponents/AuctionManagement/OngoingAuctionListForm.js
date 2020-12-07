@@ -55,7 +55,7 @@ class OngoingAuctionListForm extends Component {
                     <div className="auction-cell">{entry.canBuyNow ? "Available" : "Not Available"}</div>
                     <div className="auction-cell">{entry.bidStatus}</div>
                     <div className="auction-cell">
-                        <button onClick={() => this.stopAuction(entry.auctionId)}>Stop</button>
+                        <button onClick={() => this.stopAuction(entry.itemId)}>Stop</button>
                     </div>
                 </div>
             )
