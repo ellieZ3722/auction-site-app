@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Popup from './Popup';
 import './style.css';
+import Button from 'react-bootstrap/Button';
 
 class CustomerSupportEmailListForm extends Component {
     constructor(props) {
@@ -38,8 +39,28 @@ class CustomerSupportEmailListForm extends Component {
                 })
             },
             (error) => {
+                // this.setState({
+                //     emailFetchStatus: "fail"
+                // })
                 this.setState({
-                    emailFetchStatus: "fail"
+                    emailFetchStatus: "success",
+                    emailList: [
+                        {
+                            subject: "subject",
+                            from: "xx@xxx",
+                            text: "ttttttttt"
+                        },
+                        {
+                            subject: "subject",
+                            from: "xx@xxx",
+                            text: "ttttttttt"
+                        },
+                        {
+                            subject: "subject",
+                            from: "xx@xxx",
+                            text: "ttttttttt"
+                        }
+                    ]
                 })
             }
         )
@@ -69,7 +90,7 @@ class CustomerSupportEmailListForm extends Component {
                         <div className="email-cell">{entry.from}</div>
                         <div className="email-cell">{entry.subject}</div>
                         <div className="email-cell">
-                            <button onClick={() => this.onClick(entry)}>Reply</button>
+                            <Button variant="info" onClick={() => this.onClick(entry)}>Reply</Button>
                         </div>
                     </div>
                 )
@@ -79,13 +100,13 @@ class CustomerSupportEmailListForm extends Component {
                 <div>
                     <div className="email-section-body">
                         <div className="email-row">
-                            <div className="email-cell">From</div>
-                            <div className="email-cell">Email Title</div>
-                            <div className="email-cell">Reply</div>
+                            <div className="email-cell column-title">From</div>
+                            <div className="email-cell column-title">Email Title</div>
+                            <div className="email-cell column-title">Reply</div>
                         </div>
                         {form}
                     </div>
-                    {this.state.showPopup ? <Popup email={this.state.selectedEmail} onClose={this.onClose}></Popup> : null}
+                    {this.state.showPopup ? <Popup email={this.state.selectedEmail} onClose={this.onClose} show={this.state.showPopup}></Popup> : null}
                 </div>
             )
         } else if (this.state.flaggedItemListFetchStatus === "fail") {

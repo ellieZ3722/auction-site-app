@@ -5,6 +5,8 @@ import UserListForm from "./UserListForm";
 import FlaggedItemListForm from "./FlaggedItemListForm"
 import CustomerSupportEmailListForm from "./CustomerSupportManagement/CustomerSupportEmailListForm";
 import AuctionManagement from "./AuctionManagement/AuctionManagement";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class AdminPage extends Component {
     constructor(props) {
@@ -73,18 +75,20 @@ class AdminPage extends Component {
 
             body = (
                 <div>
-                    <div>
-                        <span>{this.state.username}, WELCOME BACK!</span>
+                    <div className="subtitle">
+                        <span>{this.state.username}, WELCOME BACK!  </span>
                         <Link to="/">
-                            <button>Logout</button>
+                            <Button>Logout</Button>
                         </Link>
                     </div>
-                    <div className="operationButtons">
-                        <button onClick={() => this.chooseOperation(1)}>Users Management</button>
-                        <button onClick={() => this.chooseOperation(2)}>Auctions Management</button>
-                        <button onClick={() => this.chooseOperation(3)}>Flagged Items</button>
-                        <button onClick={() => this.chooseOperation(4)}>Categories Management</button>
-                        <button onClick={() => this.chooseOperation(5)}>Check Customer Support Emails</button>
+                    <div className="button-group">
+                        <ButtonGroup aria-label="Basic example">
+                            <Button onClick={() => this.chooseOperation(1)}>Users Management</Button>
+                            <Button onClick={() => this.chooseOperation(2)}>Auctions Management</Button>
+                            <Button onClick={() => this.chooseOperation(3)}>Flagged Items</Button>
+                            <Button onClick={() => this.chooseOperation(4)}>Categories Management</Button>
+                            <Button onClick={() => this.chooseOperation(5)}>Check Customer Support Emails</Button>
+                        </ButtonGroup>
                     </div>
                     {subbody}
                 </div>

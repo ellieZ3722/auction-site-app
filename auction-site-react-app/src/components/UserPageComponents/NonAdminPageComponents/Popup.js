@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import './style.css';
 // import CountdownWindow from "./CountdownWindow"
 import Countdown from "react-countdown";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class Popup extends Component {
     constructor(props) {
@@ -9,7 +11,9 @@ class Popup extends Component {
 
         this.state = {
             fetchWindowListStatus: "fetching",
-            windowList: []
+            windowList: [],
+
+            show: props.show
         }
     }
 
@@ -59,21 +63,44 @@ class Popup extends Component {
             })
 
             body = (
-                <div className="modal">
-                    <div className="modal-content">
-                        <div className="window-list-row">
-                            <div className="window-list-cell">Item Name</div>
-                            <div className="window-list-cell">Countdown til Auction Start</div>
-                        </div>
-                        {subbody}
-                        <button onClick={this.props.onClose}>Back</button>
-                    </div>
+                // <div className="modal">
+                //     <div className="modal-content">
+                //         <div className="window-list-row">
+                //             <div className="window-list-cell">Item Name</div>
+                //             <div className="window-list-cell">Countdown til Auction Start</div>
+                //         </div>
+                //         {subbody}
+                //         <button onClick={this.props.onClose}>Back</button>
+                //     </div>
+                // </div>
+                <div>
+                    <Modal show={this.state.show}>
+                        <Modal.Body>
+                            <div>
+                                <div className="window-list-row">
+                                    <div className="window-list-cell column-title">Item Name</div>
+                                    <div className="window-list-cell column-title">Countdown til Auction Start</div>
+                                </div>
+                                {subbody}
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             )
         } else {
             body = (
-                <div className="modal">
-                    <p className="modal-content">Your auction window is being loaded...</p>
+                <div>
+                    <Modal show={this.state.show}>
+                        <Modal.Body>
+                            <p>Loading...</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             )
         }

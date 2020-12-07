@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Button from 'react-bootstrap/Button';
 
 class BidRow extends Component {
     constructor(props) {
@@ -133,13 +134,13 @@ class BidRow extends Component {
                 <div className="bid-cell">{this.state.myCurrentBidPrice}</div>
                 <div className="bid-cell new-bid-cell">
                     { this.state.bidStatus === "bidding" ? <form onSubmit={(e) => this.onIncrementSubmit(e)}>
-                        <input type="number" name="newBidPrice" value={this.state.newBidPrice} onChange={e => this.handleChange(e)}></input>
-                        <input type ="submit" value="place"></input>
+                        <input className="bid-input" type="number" name="newBidPrice" value={this.state.newBidPrice} onChange={e => this.handleChange(e)}></input>
+                        <Button variant="info" className="bid-button" type ="submit">place</Button>
                     </form> : null }
                 </div>
                 <div className="bid-cell">{this.state.bidStatus}</div>
                 <div className="bid-cell">
-                    { this.state.bidStatus === "won" ? <button onClick={() => this.handleAddCart()}>Add to cart</button> : null }
+                    { this.state.bidStatus === "won" ? <Button onClick={() => this.handleAddCart()}>Add to cart</Button> : null }
                 </div>
             </div>
         );

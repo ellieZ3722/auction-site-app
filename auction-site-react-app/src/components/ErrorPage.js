@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class ErrorPage extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class ErrorPage extends Component {
             <div>
                 <p>{this.props.errorMessage}</p>
                 <Link to={this.props.route + subfix}>
-                    <button>{this.props.buttonName}</button>
+                    <Button>{this.props.buttonName}</Button>
                 </Link>
             </div>
         );

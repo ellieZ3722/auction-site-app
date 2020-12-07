@@ -50,13 +50,23 @@ class AuctionRow extends Component {
         )
     }
 
+    dateFormat(date) {
+        var month = parseInt(date.getMonth()) + 1;
+        return date.getFullYear() + "/" + month.toString() + "/" + date.getUTCDate() + " " + date.getHours() + ":" + date.getMinutes()
+    }
+
     render() {
+
+        var startTime = new Date(this.state.startTime)
+        var endTime = new Date(this.state.timeExpire)
+        var dateS = this.dateFormat(startTime)
+        var dateE = this.dateFormat(endTime)
 
         return (
             <div className="auction-row" onClick={this.props.onClick}>
                 <div className="auction-cell">{this.state.itemName}</div>
-                <div className="auction-cell">{this.state.startTime}</div>
-                <div className="auction-cell">{this.state.timeExpire}</div>
+                <div className="auction-cell">{dateS}</div>
+                <div className="auction-cell">{dateE}</div>
                 <div className="auction-cell">{this.state.status}</div>
                 <div className="auction-cell">{this.state.quantity}</div>
                 <div className="auction-cell">{this.state.shippingCosts}</div>

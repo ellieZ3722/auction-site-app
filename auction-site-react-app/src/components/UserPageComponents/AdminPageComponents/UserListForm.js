@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Button from 'react-bootstrap/Button';
 
 class UserListForm extends Component {
     constructor(props) {
@@ -135,10 +136,10 @@ class UserListForm extends Component {
                         <div className="user-cell">{entry.username}</div>
                         <div className="user-cell">{entry.email}</div>
                         <div className="user-cell">
-                            <button onClick={() => this.suspendOrUnsuspend(entry.suspend, entry.uid)}>{entry.suspend ? "Unsuspend" : "Suspend"}</button>
+                            <Button variant="info" onClick={() => this.suspendOrUnsuspend(entry.suspend, entry.uid)}>{entry.suspend ? "Unsuspend" : "Suspend"}</Button>
                         </div>
                         <div className="user-cell">
-                            <button onClick={() => this.remove(entry.uid)}>Remove</button>
+                            <Button variant="info" onClick={() => this.remove(entry.uid)}>Remove</Button>
                         </div>
                     </div>
                 )
@@ -146,14 +147,14 @@ class UserListForm extends Component {
             body = (
                 <div>
                     <div className="user-row">
-                        <div className="user-cell">User ID</div>
-                        <div className="user-cell">Is Admin</div>
-                        <div className="user-cell">Username</div>
-                        <div className="user-cell">Email</div>
-                        <div className="user-cell">
+                        <div className="user-cell column-title">User ID</div>
+                        <div className="user-cell column-title">Is Admin</div>
+                        <div className="user-cell column-title">Username</div>
+                        <div className="user-cell column-title">Email</div>
+                        <div className="user-cell column-title">
                             Suspend
                         </div>
-                        <div className="user-cell">
+                        <div className="user-cell column-title">
                             Remove
                         </div>
                     </div>

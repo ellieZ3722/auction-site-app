@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import BidListForm from "./BidListForm";
+import Button from 'react-bootstrap/Button';
 
 class MyBids extends Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class MyBids extends Component {
             body = (
                 <div>
                     <Link to={`/user/nonadmin/` + this.state.userId}>
-                        <button>back to user page</button>
+                        <Button>back to user page</Button>
                     </Link>
                     <BidListForm userId={this.state.userId} bidList={this.state.bidList}></BidListForm>
                 </div>

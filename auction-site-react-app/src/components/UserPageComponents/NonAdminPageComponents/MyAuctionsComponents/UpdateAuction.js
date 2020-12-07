@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
 
 class UpdateAuction extends Component {
     constructor(props) {
@@ -147,21 +148,21 @@ class UpdateAuction extends Component {
             body = (
                 <div>
                     <Link to={"/myauctions/" + this.state.userId}>
-                        <button>back to my auctions</button>
+                        <Button>back to my auctions</Button>
                     </Link>
-                    <form onSubmit={e => this.onUpdate(e)}>
-                        <div>
+                    <form className="update-form" onSubmit={e => this.onUpdate(e)}>
+                        <div className="update-row">
                             <span>Item Name: {this.state.itemName}</span>
                         </div>
-                        <div>
+                        <div className="update-row">
                             <span>Quantity: </span>
                             <input type="text" name="quantity" value={this.state.quantity} onChange={e => this.onChange(e)}></input>
                         </div>
-                        <div>
+                        <div className="update-row">
                             <span>Shipping Cost: </span>
                             <input type="number" name="shippingCosts" value={this.state.shippingCosts} onChange={e => this.onChange(e)}></input>
                         </div>
-                        <div className="buynow-button">
+                        <div className="buynow-button update-row">
                             <span>Buynow Option: </span>
                             <Dropdown key={'Primary'}>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -173,19 +174,19 @@ class UpdateAuction extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <div>
+                        <div className="update-row">
                             <span>Buynow Price: </span>
                             <input type="number" name="buyNowPrice" value={this.state.buyNowPrice} onChange={e => this.onChange(e)}></input>
                         </div>
-                        <div>
+                        <div className="update-row">
                             <span>Item Description: </span>
                             <input type="text" name="itemDescription" value={this.state.itemDescription} onChange={e => this.onChange(e)}></input>
                         </div>
-                        <div>
-                            <input type ="submit" value="Update"></input>
+                        <div className="update-row">
+                            <Button variant="info" type ="submit">Update</Button>
                         </div>
                     </form>
-                    <button onClick={e => this.cancelAuction(e)}>Cancel the auction</button>
+                    <Button variant="info" onClick={e => this.cancelAuction(e)}>Cancel the auction</Button>
                 </div>
             )
         } else {

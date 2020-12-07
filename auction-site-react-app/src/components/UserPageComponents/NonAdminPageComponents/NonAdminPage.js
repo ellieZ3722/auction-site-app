@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import SearchResultList from "../../SearchComponents/SearchResultList";
 import Popup from "./Popup";
 import CartPopup from "./CartPopup";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class NonAdminPage extends Component {
     constructor(props) {
@@ -190,20 +192,20 @@ class NonAdminPage extends Component {
             } else {
                 searchSection = (
                     <div>
-                        <div>Search for items to bid on!</div>
+                        <div className="subtitle subtitle-size">Search for items to bid on!</div>
                         <form className="search-bar" onSubmit={e => this.handleKeywordSearchSubmit(e)}>
                             <div>
                                 <span>Search by Keyword: </span>
                                 <input name="itemKeyword" type="text" onChange={e => this.handleChange(e)}></input>
                             </div>
-                            <input type="submit" value="GO!"></input>
+                            <Button variant="info" className="go-button" type="submit">GO!</Button>
                         </form>
                         <form className="search-bar" onSubmit={e => this.handleCategorySearchSubmit(e)}>
                             <div>
                                 <span>Search by Category: </span>
                                 <input name="categoryKeyword" type="text" onChange={e => this.handleChange(e)}></input>
                             </div>
-                            <input type="submit" value="GO!"></input>
+                            <Button variant="info" className="go-button" type="submit">GO!</Button>
                         </form>
                     </div>
                 )
@@ -211,19 +213,21 @@ class NonAdminPage extends Component {
 
             body = (
                 <div>
-                    <div>
-                        <span>{this.state.username}, WELCOME BACK!</span>
+                    <div className="subtitle">
+                        <span>{this.state.username}, WELCOME BACK!   </span>
                         <Link to="/">
-                            <button>Logout</button>
+                            <Button>Logout</Button>
                         </Link>
-                        <button onClick={this.onClickCart}>Cart</button>
+                        <Button className="cart-button" onClick={this.onClickCart}>Cart</Button>
                     </div>
-                    <div className="operationButtons">
-                        <button onClick={() => this.chooseOperation(1)}>Manage Account</button>
-                        <button onClick={() => this.chooseOperation(2)}>My Auctions</button>
-                        <button onClick={() => this.chooseOperation(3)}>My Bids</button>
-                        <button onClick={() => this.chooseOperation(4)}>My Watchlist</button>
-                        <button onClick={() => this.chooseOperation(5)}>My Auction Window</button>
+                    <div className="button-group">
+                        <ButtonGroup aria-label="Basic example">
+                            <Button onClick={() => this.chooseOperation(1)}>Manage Account</Button>
+                            <Button onClick={() => this.chooseOperation(2)}>My Auctions</Button>
+                            <Button onClick={() => this.chooseOperation(3)}>My Bids</Button>
+                            <Button onClick={() => this.chooseOperation(4)}>My Watchlist</Button>
+                            <Button onClick={() => this.chooseOperation(5)}>My Auction Window</Button>
+                        </ButtonGroup>
                     </div>
                     {searchSection}
                 </div>
@@ -241,8 +245,8 @@ class NonAdminPage extends Component {
                 <div className="non-admin-page-body">
                     {body}
                 </div>
-                {this.state.showPopup ? <Popup userId={this.props.userId} onClose={this.onClose}></Popup> : null}
-                {this.state.showCart ? <CartPopup userId={this.props.userId} onClose={this.onCloseCart}></CartPopup> : null}
+                {this.state.showPopup ? <Popup userId={this.props.userId} onClose={this.onClose} show={this.state.showPopup}></Popup> : null}
+                {this.state.showCart ? <CartPopup userId={this.props.userId} onClose={this.onCloseCart} show={this.state.showCart}></CartPopup> : null}
             </div>
         );
     }

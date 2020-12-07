@@ -24,12 +24,12 @@ class BidListForm extends Component {
         return (
             <div>
                 <div className="bid-row">
-                    <div className="bid-cell">Item Name</div>
-                    <div className="bid-cell">Current Highest Bid</div>
-                    <div className="bid-cell">My Current Bid Price</div>
-                    <div className="bid-cell">Your New Bid Amount</div>
-                    <div className="bid-cell">Bid Status</div>
-                    <div className="bid-cell">Add to Cart</div>
+                    <div className="bid-cell column-title">Item Name</div>
+                    <div className="bid-cell column-title">Current Highest Bid</div>
+                    <div className="bid-cell column-title">My Current Bid Price</div>
+                    <div className="bid-cell column-title">Your New Bid Amount</div>
+                    <div className="bid-cell column-title">Bid Status</div>
+                    <div className="bid-cell column-title">Add to Cart</div>
                 </div>
                 {form}
             </div>

@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class Homepage extends Component {
     render() {
         return (
             <div>
                 <Link to="/register">
-                    <button>New User</button>
+                    <Button className="normal-button">New User</Button>
                 </Link>
                 <Link to="/login">
-                    <button>Login</button>
+                    <Button className="normal-button">Login</Button>
                 </Link>
             </div>
         );

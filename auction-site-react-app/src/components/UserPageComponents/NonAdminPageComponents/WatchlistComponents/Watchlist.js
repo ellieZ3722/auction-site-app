@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Popup from "./Popup";
+import Button from 'react-bootstrap/Button';
 
 class Watchlist extends Component {
     constructor(props) {
@@ -78,8 +79,8 @@ class Watchlist extends Component {
             body = (
                 <div>
                     <div className="watchlist-row">
-                        <div className="watchlist-cell">Watchlist Item Name</div>
-                        <div className="watchlist-cell">Notify When Price is Less Than</div>
+                        <div className="watchlist-cell column-title">Watchlist Item Name</div>
+                        <div className="watchlist-cell column-title">Notify When Price is Less Than</div>
                     </div>
                     {list}
                 </div>
@@ -96,12 +97,12 @@ class Watchlist extends Component {
             <div>
                 <div className="watchlist-body">
                     <Link to={`/user/nonadmin/` + this.state.userId}>
-                        <button>back to user page</button>
+                        <Button className="auction-button">back to user page</Button>
                     </Link>
-                    <button onClick={this.onClickAddWatchlist}>add to watchlist</button>
+                    <Button className="auction-button" onClick={this.onClickAddWatchlist}>add to watchlist</Button>
                     {body}
                 </div>
-                {this.state.showPopup ? <Popup userId={this.state.userId} onClose={this.onClose}></Popup> : null}
+                {this.state.showPopup ? <Popup userId={this.state.userId} onClose={this.onClose} show={this.state.showPopup}></Popup> : null}
             </div>
         );
     }

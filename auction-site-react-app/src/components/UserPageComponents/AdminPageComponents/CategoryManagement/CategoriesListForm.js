@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Popup from "./Popup";
 import "./Category.css";
 import AddPopup from './AddCatPop';
+import Button from 'react-bootstrap/Button';
 
 class CategoriesListForm extends Component {
     constructor(props) {
@@ -112,10 +113,10 @@ class CategoriesListForm extends Component {
                     <div key={entry.categoryName} className="category-row">
                         <div className="category-cell">{entry.categoryName}</div>
                         <div className="category-cell">
-                            <button onClick={() => this.modifyCat(entry)}>modify</button>
+                            <Button variant="info" onClick={() => this.modifyCat(entry)}>modify</Button>
                         </div>
                         <div className="category-cell">
-                            <button onClick={() => this.removeCat(entry.categoryId)}>remove</button>
+                            <Button variant="info" onClick={() => this.removeCat(entry.categoryId)}>remove</Button>
                         </div>
                     </div>
                 )
@@ -124,17 +125,18 @@ class CategoriesListForm extends Component {
             body = (
                 <div>
                     <div className="category-body">
-                        <button onClick={this.addCat}>Add a new category</button>
+                        <Button variant="info" onClick={this.addCat}>Add a new category</Button>
                         <div className="category-row">
-                            <div className="category-cell">Category Name</div>
-                            <div className="category-cell">Modify</div>
-                            <div className="category-cell">Remove</div>
+                            <div className="category-cell column-title">Category Name</div>
+                            <div className="category-cell column-title">Modify</div>
+                            <div className="category-cell column-title">Remove</div>
                         </div>
                         {form}
                     </div>
-                    {this.state.showPopup ? <Popup category={this.state.selectedCat} onClose={this.onPopupClose}></Popup> : null }
-                    {this.state.showAddPop ? <AddPopup onClose={this.onCloseAdd}></AddPopup> : null }
+                    {this.state.showPopup ? <Popup category={this.state.selectedCat} onClose={this.onPopupClose} show={this.state.showPopup}></Popup> : null }
+                    {this.state.showAddPop ? <AddPopup onClose={this.onCloseAdd} show={this.state.showAddPop}></AddPopup> : null }
                 </div>
+                
             )
 
         } else if (this.state.categoriesFetchStatus === "fail") {

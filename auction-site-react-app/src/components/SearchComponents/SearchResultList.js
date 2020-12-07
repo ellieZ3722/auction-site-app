@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Popup from "./Popup";
+import Button from 'react-bootstrap/Button';
 
 class SearchResultList extends Component {
     constructor(props) {
@@ -42,22 +43,33 @@ class SearchResultList extends Component {
         )
     }
 
+    dateFormat(date) {
+        var month = parseInt(date.getMonth()) + 1;
+        return date.getFullYear() + "/" + month.toString() + "/" + date.getUTCDate() + " " + date.getHours() + ":" + date.getMinutes()
+    }
+
     render() {
         let body = this.props.searchResult.map(entry => {
+
+            var startTime = new Date(entry.startTime)
+            var endTime = new Date(entry.endTime)
+            var dateS = this.dateFormat(startTime)
+            var dateE = this.dateFormat(endTime)
+
             return (
                 <div key={entry.item.id} className="search-row">
                     <div className="search-cell">{entry.item.name}</div>
                     <div className="search-cell">{entry.item.quantity}</div>
-                    <div className="search-cell">{entry.startTime}</div>
-                    <div className="search-cell">{entry.endTime}</div>
+                    <div className="search-cell">{dateS}</div>
+                    <div className="search-cell">{dateE}</div>
                     <div className="search-cell">{entry.bidStatus}</div>
                     <div className="search-cell">{entry.initPrice}</div>
                     <div className="search-cell">{entry.currentHighestBid}</div>
                     <div className="search-cell">
-                        <button onClick={() => this.onDetailClick(entry)}>Detail</button>
+                        <Button variant="info" onClick={() => this.onDetailClick(entry)}>Detail</Button>
                     </div>
                     <div className="search-cell">
-                        { entry.canBuyNow ? <button onClick={() => this.onCartClick(entry)}>Add to cart for ${entry.buyNowPrice}</button> : null }
+                        { entry.canBuyNow ? <Button variant="info" onClick={() => this.onCartClick(entry)}>Add to cart for ${entry.buyNowPrice}</Button> : null }
                     </div>
                 </div>
             )
@@ -67,20 +79,20 @@ class SearchResultList extends Component {
             <div>
                 <div className="search-result-body">
                     <div className="search-row">
-                        <div className="search-cell">Item Name</div>
-                        <div className="search-cell">Quantity</div>
-                        <div className="search-cell">Start Time</div>
-                        <div className="search-cell">End Time</div>
-                        <div className="search-cell">Auction Status</div>
-                        <div className="search-cell">Start Price</div>
-                        <div className="search-cell">Current Highest Bid</div>
-                        <div className="search-cell">Detail</div>
-                        <div className="search-cell">BuyNow</div>
+                        <div className="search-cell column-title">Item Name</div>
+                        <div className="search-cell column-title">Quantity</div>
+                        <div className="search-cell column-title">Start Time</div>
+                        <div className="search-cell column-title">End Time</div>
+                        <div className="search-cell column-title">Auction Status</div>
+                        <div className="search-cell column-title">Start Price</div>
+                        <div className="search-cell column-title">Current Highest Bid</div>
+                        <div className="search-cell column-title">Detail</div>
+                        <div className="search-cell column-title">BuyNow</div>
                     </div>
                     {body}
-                    <button onClick={this.props.onClickBack}>Back to search</button>
+                    <Button className="back-button" variant="info" onClick={this.props.onClickBack}>Back to search</Button>
                 </div>
-                {this.state.showPopup ? <Popup userID={this.props.userId} entry={this.state.selectedItem} onClose={this.onClose}></Popup> : null}
+                {this.state.showPopup ? <Popup userID={this.props.userId} entry={this.state.selectedItem} onClose={this.onClose} show={this.state.showPopup}></Popup> : null}
             </div>
         );
     }

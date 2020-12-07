@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class ManageAccountPage extends Component {
     constructor(props) {
@@ -145,31 +146,31 @@ class ManageAccountPage extends Component {
             body = (
                 <div>
                     <Link to={`/user/nonadmin/` + this.state.userId}>
-                        <button>back to user page</button>
+                        <Button>back to user page</Button>
                     </Link>
-                    <div>
-                        <div>Update Account Information:</div>
+                    <div className="update-section">
+                        <span className="update-title">Update Account Information:</span>
                         <form onSubmit={this.onUpdateSubmit}>
-                            <div>
+                            <div className="update-row">
                                 <span>Username: </span>
                                 <input value={this.state.username} type="text" name="username" onChange={(e) => this.handleChange(e)}></input>
                             </div>
-                            <div>
+                            <div className="update-row">
                                 <span>Email: </span>
                                 <input value={this.state.email} type="text" name="email" onChange={(e) => this.handleChange(e)}></input>
                             </div>
-                            <div>
+                            <div className="update-row">
                                 <span>Password: </span>
                                 <input type="text" name="password" onChange={(e) => this.handleChange(e)}></input>
                             </div>
-                            <input type="submit" value="Update"></input>
+                            <Button variant="info" type="submit">Update</Button>
                         </form>
                     </div>
-                    <div>
-                        <button onClick={this.onSuspendClick}>{ this.state.isSuspended ? `Unsuspend Account` : `Suspend Account`}</button>
+                    <div className="suspend-section">
+                        <Button variant="info" onClick={this.onSuspendClick}>{ this.state.isSuspended ? `Unsuspend Account` : `Suspend Account`}</Button>
                     </div>
-                    <div>
-                        <button onClick={this.onDeleteClick}>Delete Account</button>
+                    <div className="delete-section">
+                        <Button variant="info" onClick={this.onDeleteClick}>Delete Account</Button>
                     </div>
                 </div>
             )

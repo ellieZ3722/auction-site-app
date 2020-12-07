@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ClosedAuctionListForm from "./ClosedAuctionListForm";
 import OngoingAuctionListForm from "./OngoingAuctionListForm";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class AuctionManagement extends Component {
     constructor(props) {
@@ -100,8 +102,10 @@ class AuctionManagement extends Component {
             body = (
                 <div>
                     <div className="admin-auction-buttons">
-                        <button onClick={this.clickOngoingAuctions}>Ongoing Auctions</button>
-                        <button onClick={this.clickClosedAuctions}>Closed Auctions</button>
+                        <ButtonGroup aria-label="Basic example">
+                            <Button variant="info" onClick={this.clickOngoingAuctions}>Ongoing Auctions</Button>
+                            <Button variant="info" onClick={this.clickClosedAuctions}>Closed Auctions</Button>
+                        </ButtonGroup>
                     </div>
                     {form}
                 </div>

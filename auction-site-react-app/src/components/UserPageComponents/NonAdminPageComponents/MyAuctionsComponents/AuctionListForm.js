@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AuctionRow from './AuctionRow';
+import Button from 'react-bootstrap/Button';
 
 class AuctionListForm extends Component {
     constructor(props) {
@@ -33,16 +34,16 @@ class AuctionListForm extends Component {
         return (
             <div>
                 <div className="auction-row">
-                    <div className="auction-cell">Item Name</div>
-                    <div className="auction-cell">Start Time</div>
-                    <div className="auction-cell">Expire Time</div>
-                    <div className="auction-cell">Status</div>
-                    <div className="auction-cell">Quantity</div>
-                    <div className="auction-cell">Shipping Cost</div>
-                    <div className="auction-cell">Buynow</div>
-                    <div className="auction-cell">Buynow Price</div>
-                    <div className="auction-cell">Item Description</div>
-                    <div className="auction-cell">Bid Count</div>
+                    <div className="auction-cell column-title">Item Name</div>
+                    <div className="auction-cell column-title">Start Time</div>
+                    <div className="auction-cell column-title">Expire Time</div>
+                    <div className="auction-cell column-title">Status</div>
+                    <div className="auction-cell column-title">Quantity</div>
+                    <div className="auction-cell column-title">Shipping Cost</div>
+                    <div className="auction-cell column-title">Buynow</div>
+                    <div className="auction-cell column-title">Buynow Price</div>
+                    <div className="auction-cell column-title">Item Description</div>
+                    <div className="auction-cell column-title">Bid Count</div>
                 </div>
                 {form}
             </div>

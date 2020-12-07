@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
+import './style.css';
 
 class Register extends Component {
     constructor(props) {
@@ -70,26 +72,26 @@ class Register extends Component {
     render() {
         return (
             <div>
-                <p>Register as a member!</p>
+                <p className="register-title">Register as a member!</p>
                 <div className="register-form-container">
                     <form className="register-form" onSubmit={e => this.handleSubmit(e)}>
-                        <div className="username-input">
+                        <div className="register-input">
                             <span>Username: </span>
                             <input name="username" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
-                        <div className="email-input">
+                        <div className="register-input">
                             <span>Email: </span>
                             <input name="email" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
-                        <div className="password-input">
+                        <div className="register-input">
                             <span>Password: </span>
                             <input name="password" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
-                        <div className="password-input">
+                        <div className="register-input">
                             <span>Bio: </span>
                             <input name="userBio" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
-                        <div className="admin-input">
+                        <div className="register-input">
                             <span>Admin: </span>
                             <Dropdown key={'Primary'}>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -101,11 +103,11 @@ class Register extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <div>
-                            <input className="register-submit-button" type ="submit" value="Register"></input>
+                        <div className="register-input">
+                            <Button className="register-submit-button" type ="submit">Register</Button>
                         </div>
                         <Link to='/login'>
-                            <button>Already have an account? Login here</button>
+                            <Button className="login-button">Already have an account? Login here</Button>
                         </Link>
                     </form>
                 </div>

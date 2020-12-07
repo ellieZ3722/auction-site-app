@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuctionListForm from "./AuctionListForm";
+import Button from 'react-bootstrap/Button';
 
 class MyAuctions extends Component {
     constructor(props) {
@@ -53,9 +54,9 @@ class MyAuctions extends Component {
             body = (
                 <div>
                     <Link to={`/user/nonadmin/` + this.state.userId}>
-                        <button>back to user page</button>
+                        <Button className="auction-button">back to user page</Button>
                     </Link>
-                    <button onClick={this.addAuction}>List a new auction</button>
+                    <Button className="auction-button" onClick={this.addAuction}>List a new auction</Button>
                     <AuctionListForm userId={this.state.userId} className="auction-form" auctionList={this.state.auctionList}></AuctionListForm>
                 </div>
             )

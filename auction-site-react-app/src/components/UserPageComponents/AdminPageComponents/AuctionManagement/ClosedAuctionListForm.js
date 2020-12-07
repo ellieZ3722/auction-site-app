@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Popup from './Popup';
+import Button from 'react-bootstrap/Button';
 
 class ClosedAuctionListForm extends Component {
     constructor(props) {
@@ -30,21 +31,31 @@ class ClosedAuctionListForm extends Component {
         })
     }
 
+    dateFormat(date) {
+        var month = parseInt(date.getMonth()) + 1;
+        return date.getFullYear() + "/" + month.toString() + "/" + date.getUTCDate() + " " + date.getHours() + ":" + date.getMinutes()
+    }
+
     render() {
         let body;
         body = this.state.auctionList.map(entry => {
+
+            var startTime = new Date(entry.startTime)
+            var endTime = new Date(entry.endTime)
+            var dateS = this.dateFormat(startTime)
+            var dateE = this.dateFormat(endTime)
 
             return (
                 <div key={entry.itemId} className="auction-row">
                     <div className="auction-cell">{entry.itemId}</div>
                     <div className="auction-cell">{entry.sellerId}</div>
-                    <div className="auction-cell">{entry.startTime}</div>
-                    <div className="auction-cell">{entry.endTime}</div>
+                    <div className="auction-cell">{dateS}</div>
+                    <div className="auction-cell">{dateE}</div>
                     <div className="auction-cell">{entry.bidCount}</div>
                     <div className="auction-cell">{entry.winnerId}</div>
                     <div className="auction-cell">{entry.finalOffer}</div>
                     <div className="auction-cell">
-                        <button onClick={() => this.checkBidHistory(entry.prevBid)}>Check</button>
+                        <Button onClick={() => this.checkBidHistory(entry.prevBid)}>Check</Button>
                     </div>
                 </div>
             )
@@ -54,18 +65,18 @@ class ClosedAuctionListForm extends Component {
             <div>
                 <div className="closed-auctions-body">
                     <div className="auction-row">
-                        <div className="auction-cell">Auction ID</div>
-                        <div className="auction-cell">Seller UserID</div>
-                        <div className="auction-cell">Start Time</div>
-                        <div className="auction-cell">Expire Time</div>
-                        <div className="auction-cell">Bid Count</div>
-                        <div className="auction-cell">Winner UserID</div>
-                        <div className="auction-cell">Final Offer Price</div>
-                        <div className="auction-cell">Check Bid History</div>
+                        <div className="auction-cell column-title">Auction ID</div>
+                        <div className="auction-cell column-title">Seller UserID</div>
+                        <div className="auction-cell column-title">Start Time</div>
+                        <div className="auction-cell column-title">Expire Time</div>
+                        <div className="auction-cell column-title">Bid Count</div>
+                        <div className="auction-cell column-title">Winner UserID</div>
+                        <div className="auction-cell column-title">Final Offer Price</div>
+                        <div className="auction-cell column-title">Check Bid History</div>
                     </div>
                     {body}
                 </div>
-                { this.state.showPopup ? <Popup onClose={this.onClose} bidList={this.state.prevBid}></Popup> : null}
+                { this.state.showPopup ? <Popup onClose={this.onClose} bidList={this.state.prevBid} show={this.state.showPopup}></Popup> : null}
             </div>
         );
     }

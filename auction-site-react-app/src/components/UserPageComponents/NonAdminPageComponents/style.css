@@ -34,3 +34,26 @@
   align-items: center;
   justify-content: center;
 }
+
+.checkout-button {
+  margin-top: 40px;
+  margin-left: 160px;
+}
+
+.update-title {
+  font-size: large;
+}
+
+.update-section {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.suspend-section {
+  margin-bottom: 40px;
+}
+
+.update-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

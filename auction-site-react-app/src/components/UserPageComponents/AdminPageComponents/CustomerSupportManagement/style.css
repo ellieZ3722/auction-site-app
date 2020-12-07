@@ -19,11 +19,15 @@
 
 .email-section-body {
   position: absolute;
-  top: 10%;
+  top: 45%;
   width: 100%;
   text-align: center;
 }
 
 .modal-entry {
   display: flex;
+}
+
+.subject {
+  display: block;
 }

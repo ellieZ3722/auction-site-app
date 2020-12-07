@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import './style.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class Popup extends Component {
     constructor(props) {
@@ -8,7 +10,9 @@ class Popup extends Component {
         this.state = {
             replyTitle: "Enter your subject...",
             replyContent: "Enter your reply...",
-            showReplyPanel: false
+            showReplyPanel: false,
+
+            show: props.show
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,39 +74,67 @@ class Popup extends Component {
         let replyPanel = (
             <div>
                 <form onSubmit={e => this.handleSubmit(e)} id="replyForm">
-                    <input name="replyTitle" onChange={e => this.handleChange(e)} value={this.state.replyTitle}></input>
+                    <input className="subject" name="replyTitle" onChange={e => this.handleChange(e)} value={this.state.replyTitle}></input>
                     <textarea name="replyContent" form="replyForm" onChange={e => this.handleChange(e)} value={this.state.replyContent} />
                     <div>
-                        <input type="submit" value="Send"></input>
-                        <button onClick={this.props.onClose}>Cancel</button>
+                        <Button variant="info" type="submit">Send</Button>
                     </div>
                 </form>
             </div>
         )
 
         return (
-            <div className="modal">
-                <div className="modal-content">
-                    <div className="modal-entry">
-                        <span>Title: </span>
-                        <div>{this.props.email.subject}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <span>User ID: </span>
-                        <div>{this.props.email.from}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <div>Content: </div>
-                        <div>{this.props.email.text}</div>
-                    </div>
-                    { this.state.showReplyPanel ? null : (
+            // <div className="modal">
+                // <div className="modal-content">
+                //     <div className="modal-entry">
+                //         <span>Title: </span>
+                //         <div>{this.props.email.subject}</div>
+                //     </div>
+                //     <div className="modal-entry">
+                //         <span>User ID: </span>
+                //         <div>{this.props.email.from}</div>
+                //     </div>
+                //     <div className="modal-entry">
+                //         <div>Content: </div>
+                //         <div>{this.props.email.text}</div>
+                //     </div>
+                //     { this.state.showReplyPanel ? null : (
+                //         <div>
+                //             <button onClick={this.handleReply}>Reply</button>
+                //             <button onClick={this.props.onClose}>Cancel</button>
+                //         </div>
+                //         ) }
+                //     { this.state.showReplyPanel ? replyPanel : null }
+                // </div>
+            // </div>
+            <div>
+                <Modal show={this.state.show}>
+                    <Modal.Body>
                         <div>
-                            <button onClick={this.handleReply}>Reply</button>
-                            <button onClick={this.props.onClose}>Cancel</button>
+                            <div className="modal-entry">
+                                <span>Title: </span>
+                                <div>{this.props.email.subject}</div>
+                            </div>
+                            <div className="modal-entry">
+                                <span>User ID: </span>
+                                <div>{this.props.email.from}</div>
+                            </div>
+                            <div className="modal-entry">
+                                <div>Content: </div>
+                                <div>{this.props.email.text}</div>
+                            </div>
+                            { this.state.showReplyPanel ? null : (
+                                <div>
+                                    <Button variant="info" onClick={this.handleReply}>Reply</Button>
+                                </div>
+                                ) }
+                            { this.state.showReplyPanel ? replyPanel : null }
                         </div>
-                        ) }
-                    { this.state.showReplyPanel ? replyPanel : null }
-                </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }

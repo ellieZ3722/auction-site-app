@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class Login extends Component {
     constructor(props) {
@@ -79,10 +80,10 @@ class Login extends Component {
                             <input name="password" type="text" onChange={e => this.handleChange(e)}></input>
                         </div>
                         <div>
-                            <input className="login-submit-button" type ="submit" value="Login"></input>
+                            <Button className="normal-button2" type ="submit">login</Button>
                         </div>
                         <Link to="/register">
-                            <button>Don't have an account? Go register here</button>
+                            <Button className="normal-button2">Don't have an account? Go register here</Button>
                         </Link>
                     </form>
                 </div>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import './style.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class CartPopup extends Component {
     constructor(props) {
@@ -7,7 +9,8 @@ class CartPopup extends Component {
 
         this.state = {
             fetchCartStatus: "fetching",
-            cart: []
+            cart: [],
+            show: props.show
         }
 
         this.onClickCheckout = this.onClickCheckout.bind(this);
@@ -114,30 +117,55 @@ class CartPopup extends Component {
                         <div className="window-list-cell">{entry.item_name}</div>
                         <div className="window-list-cell">{entry.item_price}</div>
                         <div className="window-list-cell">
-                            <button onClick={() => this.onClickDelete(entry.item_id)}>delete</button>
+                            <Button variant="info" onClick={() => this.onClickDelete(entry.item_id)}>delete</Button>
                         </div>
                     </div>
                 )
             })
 
             body = (
-                <div className="modal">
-                    <div className="modal-content">
-                        <div className="window-list-row">
-                            <div className="window-list-cell">Item Name</div>
-                            <div className="window-list-cell">Winning Price</div>
-                            <div className="window-list-cell">Delete Item</div>
-                        </div>
-                        {subbody}
-                        <button onClick={this.props.onClose}>Back</button>
-                        <button onClick={() => this.onClickCheckout()}>checkout</button>
-                    </div>
+                // <div className="modal">
+                    // <div className="modal-content">
+                    //     <div className="window-list-row">
+                    //         <div className="window-list-cell">Item Name</div>
+                    //         <div className="window-list-cell">Winning Price</div>
+                    //         <div className="window-list-cell">Delete Item</div>
+                    //     </div>
+                    //     {subbody}
+                    //     <button onClick={this.props.onClose}>Back</button>
+                    //     <button onClick={() => this.onClickCheckout()}>checkout</button>
+                    // </div>
+                // </div>
+                <div>
+                    <Modal show={this.state.show}>
+                        <Modal.Body>
+                            <div>
+                                <div className="window-list-row">
+                                    <div className="window-list-cell column-title">Item Name</div>
+                                    <div className="window-list-cell column-title">Winning Price</div>
+                                    <div className="window-list-cell column-title">Delete Item</div>
+                                </div>
+                                {subbody}
+                                <Button className="checkout-button" variant="info" onClick={() => this.onClickCheckout()}>checkout</Button>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             )
         } else {
             body = (
-                <div className="modal">
-                    <p className="modal-content">Your cart is being loaded...</p>
+                <div>
+                    <Modal show={this.state.show}>
+                        <Modal.Body>
+                            <p>Loading...</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             )
         }

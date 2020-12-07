@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./Category.css";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class Popup extends Component {
     constructor(props) {
@@ -8,6 +10,7 @@ class Popup extends Component {
         this.state = {
             oldCatName: props.category.categoryName,
             catName: props.category.categoryName,
+            show: props.show
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,19 +62,39 @@ class Popup extends Component {
 
     render() {
         return (
-            <div className="modal">
-                <div className="modal-content">
-                    <form onSubmit={e => this.handleSubmit(e)}>
+            // <div className="modal">
+                // <div className="modal-content">
+                //     <form onSubmit={e => this.handleSubmit(e)}>
+                //         <div>
+                //             <span>Category Name: </span>
+                //             <input name="catName" value={this.state.catName} type="text" onChange={e => this.handleChange(e)}></input>
+                //         </div>
+                //         <div>
+                //             <input type="submit" value="Modify"></input>
+                //             <button onClick={this.props.onClose}>Cancel</button>
+                //         </div>
+                //     </form>
+                // </div>
+            // </div>
+            <div>
+                <Modal show={this.state.show}>
+                    <Modal.Body>
                         <div>
-                            <span>Category Name: </span>
-                            <input name="catName" value={this.state.catName} type="text" onChange={e => this.handleChange(e)}></input>
+                            <form onSubmit={e => this.handleSubmit(e)}>
+                                <div>
+                                    <span>Category Name: </span>
+                                    <input name="catName" value={this.state.catName} type="text" onChange={e => this.handleChange(e)}></input>
+                                </div>
+                                <div>
+                                    <Button variant="info" type="submit" >Modify</Button>
+                                </div>
+                            </form>
                         </div>
-                        <div>
-                            <input type="submit" value="Modify"></input>
-                            <button onClick={this.props.onClose}>Cancel</button>
-                        </div>
-                    </form>
-                </div>
+                        </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }

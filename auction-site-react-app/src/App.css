@@ -45,10 +45,11 @@
   justify-content: center;
   width: 95%;
   height: 60px;
+  cursor: pointer;
 }
 
 .auction-cell {
-  width: 7.69%;
+  width: 16.666%;
   padding: 15px;
 }
 
@@ -109,7 +110,7 @@ body {
 }
 
 .search-cell {
-  width: 10%;
+  width: 11.11111%;
   padding: 15px;
 }
 
@@ -186,4 +187,96 @@ body {
 .email-cell {
   width: 33.33333%;
   padding: 15px;
+}
+
+.normal-button {
+  margin: 30px;
+}
+
+.normal-button2 {
+  margin: 10px;
+}
+
+.header-title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 60px;
+  /* margin-bottom: 60px; */
+  color: white;
+}
+/* 1e90ff */
+
+.header {
+  padding-top: 20px;
+  padding-bottom: 60px;
+  background-image: linear-gradient(#fec5e5, white);
+}
+/* #ead3d7 */
+p {
+  color: #778899;
+  font-weight: bold;
+}
+
+div {
+  color: #778899;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+}
+
+.button-group {
+  margin-bottom: 20px;
+}
+
+.column-title {
+  font-weight: bold;
+}
+
+span {
+  font-weight: bold;
+}
+
+.cart-button {
+  margin-left: 10px;
+}
+
+.subtitle-size {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.go-button {
+  margin-left: 10px;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.auction-button {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.update-form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.update-row {
+  margin-bottom: 10px;
+}
+
+.list-text {
+  margin-top: 20px;
+}
+
+.bid-button {
+  margin-left: 10px;
+}
+
+.bid-input {
+  width: 50px;
 }

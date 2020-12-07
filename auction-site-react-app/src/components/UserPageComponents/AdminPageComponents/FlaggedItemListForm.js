@@ -66,9 +66,9 @@ class FlaggedItemListForm extends Component {
             body = (
                 <div>
                     <div className="flagged-row">
-                        <div className="flagged-cell">Item Name</div>
-                        <div className="flagged-cell">Item ID</div>
-                        <div className="flagged-cell">Flagged By (userid)</div>
+                        <div className="flagged-cell column-title">Item Name</div>
+                        <div className="flagged-cell column-title">Item ID</div>
+                        <div className="flagged-cell column-title">Flagged By (userid)</div>
                     </div>
                     {form}
                 </div>

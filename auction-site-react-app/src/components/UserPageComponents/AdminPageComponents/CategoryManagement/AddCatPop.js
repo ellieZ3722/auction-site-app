@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import "./Category.css";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class AddPopup extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            catName: ""
+            catName: "",
+            show: props.show
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -58,19 +61,39 @@ class AddPopup extends Component {
 
     render() {
         return (
-            <div className="modal">
-                <div className="modal-content">
-                    <form onSubmit={e => this.handleSubmit(e)}>
+            // <div className="modal">
+                // <div className="modal-content">
+                //     <form onSubmit={e => this.handleSubmit(e)}>
+                //         <div>
+                //             <span>Category Name: </span>
+                //             <input name="catName" type="text" onChange={e => this.handleChange(e)}></input>
+                //         </div>
+                //         <div>
+                //             <input type="submit" value="Add"></input>
+                //             <button onClick={this.props.onClose}>Cancel</button>
+                //         </div>
+                //     </form>
+                // </div>
+            // </div>
+            <div>
+                <Modal show={this.state.show}>
+                    <Modal.Body>
                         <div>
-                            <span>Category Name: </span>
-                            <input name="catName" type="text" onChange={e => this.handleChange(e)}></input>
+                            <form onSubmit={e => this.handleSubmit(e)}>
+                                <div>
+                                    <span>Category Name: </span>
+                                    <input name="catName" type="text" onChange={e => this.handleChange(e)}></input>
+                                </div>
+                                <div>
+                                    <Button type="submit">Add</Button>
+                                </div>
+                            </form>
                         </div>
-                        <div>
-                            <input type="submit" value="Add"></input>
-                            <button onClick={this.props.onClose}>Cancel</button>
-                        </div>
-                    </form>
-                </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
 
 class ListAuction extends Component {
     constructor(props) {
@@ -148,35 +149,35 @@ class ListAuction extends Component {
         return (
             <div>
                 <Link to={"/myauctions/" + this.state.userId}>
-                    <button>back to myAuction page</button>
+                    <Button>back to myAuction page</Button>
                 </Link>
-                <p>List a new auction:</p>
-                <form onSubmit={(e) => this.onSubmit(e)}>
-                    <div>
+                <p className="list-text">List a new auction:</p>
+                <form className="update-form" onSubmit={(e) => this.onSubmit(e)}>
+                    <div className="update-row">
                         <span>Item Name: </span>
                         <input type="text" name="name" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Quantity: </span>
                         <input type="number" name="quantity" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Start Time: </span>
                         <DateTimePicker closeWidgets={true} value={this.state.startTime} onChange={date => this.onStartTimeChange(date)}></DateTimePicker>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Expire Time: </span>
                         <DateTimePicker value={this.state.timeExpire} onChange={date => this.onEndTimeChange(date)}></DateTimePicker>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Start Price: </span>
                         <input type="number" name="startPrice" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Shipping Cost: </span>
                         <input type="number" name="shippingCosts" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div className="buynow-button">
+                    <div className="buynow-button update-row">
                         <span>Buynow Option: </span>
                         <Dropdown key={'Primary'}>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -188,24 +189,24 @@ class ListAuction extends Component {
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Buynow Price: </span>
                         <input type="number" name="buyNowPrice" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Item Description: </span>
                         <input type="text" name="itemDescription" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Seller Rating: </span>
                         <input type="number" step="0.1" name="sellerRating" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
+                    <div className="update-row">
                         <span>Category:</span>
                         <input type="text" name="category" onChange={e => this.onChange(e)}></input>
                     </div>
-                    <div>
-                        <input type ="submit" value="List"></input>
+                    <div className="list-button">
+                        <Button variant="info" type ="submit">List</Button>
                     </div>
                 </form>
             </div>

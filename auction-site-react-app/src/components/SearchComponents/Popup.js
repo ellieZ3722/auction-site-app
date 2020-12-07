@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import './style.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class Popup extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            bidPrice: 0
+            bidPrice: 0,
+            show: props.show
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -130,6 +133,11 @@ class Popup extends Component {
         )
     }
 
+    dateFormat(date) {
+        var month = parseInt(date.getMonth()) + 1;
+        return date.getFullYear() + "/" + month.toString() + "/" + date.getUTCDate() + " " + date.getHours() + ":" + date.getMinutes()
+    }
+
     render() {
         let subbody;
 
@@ -139,55 +147,64 @@ class Popup extends Component {
                     <form onSubmit={e => this.handleSubmit(e)}>
                         <span>Your bid price: </span>
                         <input name="bidPrice" type="number" onChange={e => this.handleChange(e)}></input>
-                        <input type ="submit" value="Bid"></input>
+                        <Button className="popup-button" type ="submit">Bid</Button>
                     </form>
                 </div>
             )
         } else {
             subbody = (
                 <div>
-                    <button onClick={e => this.handleAddAuctionWindow(e)}>Add to my aution window</button>
+                    <Button className="popup-button" onClick={e => this.handleAddAuctionWindow(e)}>Add to my aution window</Button>
                 </div>
             )
         }
 
+        var startTime = new Date(this.props.entry.startTime)
+        var endTime = new Date(this.props.entry.endTime)
+        var dateS = this.dateFormat(startTime)
+        var dateE = this.dateFormat(endTime)
+
         return (
-            <div className="modal">
-                <div className="modal-content">
-                    <div className="modal-entry">
-                        <span>Item Name: </span>
-                        <div> {this.props.entry.item.name}</div>
+            <div>
+                <Modal show={this.state.show}>
+                    <Modal.Body>
+                    <div>
+                        <div className="modal-entry">
+                            <span>Item Name: </span>
+                            <div> {this.props.entry.item.name}</div>
+                        </div>
+                        <div className="modal-entry">
+                            <span>Category: </span>
+                            <div> {this.props.entry.item.categoryId}</div>
+                        </div>
+                        <div className="modal-entry">
+                            <span>Shipping Cost: </span>
+                            <div> {this.props.entry.item.shippingCosts}</div>
+                        </div>
+                        <div className="modal-entry">
+                            <span>Item Description: </span>
+                            <div> {this.props.entry.item.description}</div>
+                        </div>
+                        <div className="modal-entry">
+                            <span>Start Time: </span>
+                            <div> {dateS}</div>
+                        </div>
+                        <div className="modal-entry">
+                            <span>End Time: </span>
+                            <div> {dateE}</div>
+                        </div>
+                        <div className="modal-entry">
+                            {subbody}
+                        </div>
+                        <div className="modal-entry">
+                            <Button className="popup-button" onClick={this.onClickFlag}>Flag this item as inappropriate or counterfeit</Button>
+                        </div>
                     </div>
-                    <div className="modal-entry">
-                        <span>Category: </span>
-                        <div> {this.props.entry.item.categoryId}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <span>Shipping Cost: </span>
-                        <div> {this.props.entry.item.shippingCosts}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <span>Item Description: </span>
-                        <div> {this.props.entry.item.description}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <span>Start Time: </span>
-                        <div> {this.props.entry.startTime}</div>
-                    </div>
-                    <div className="modal-entry">
-                        <div>End Time: </div>
-                        <div> {this.props.entry.endTime}</div>
-                    </div>
-                    <div className="modal-entry">
-                        {subbody}
-                    </div>
-                    <div className="modal-entry">
-                        <button onClick={this.onClickFlag}>Flag this item as inappropriate or counterfeit</button>
-                    </div>
-                    <div className="modal-entry">
-                        <button onClick={this.props.onClose}>Cancel</button>
-                    </div>
-                </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.props.onClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
