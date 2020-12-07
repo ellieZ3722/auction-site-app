@@ -10,9 +10,9 @@ class AuctionRow extends Component {
 
             itemName: "",
             startTime: props.auction.startTime,
-            quantity: "",
+            quantity: 0,
             timeExpire: props.auction.endTime,
-            shippingCosts: "",
+            shippingCosts: 0,
             buyNow: props.auction.canBuyNow,
             itemDescription: "",
             status: props.auction.bidStatus,
@@ -23,6 +23,7 @@ class AuctionRow extends Component {
 
     componentDidMount() {
         const url = "http://localhost:8080/auction/item/" + this.state.auctionId;
+        console.log(url)
 
         fetch(url, {
             method: "GET",

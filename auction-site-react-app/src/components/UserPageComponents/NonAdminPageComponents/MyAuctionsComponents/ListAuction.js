@@ -173,7 +173,7 @@ class ListAuction extends Component {
                     </div>
                     <div>
                         <span>Shipping Cost: </span>
-                        <input type="number" name="shippingCost" onChange={e => this.onChange(e)}></input>
+                        <input type="number" name="shippingCosts" onChange={e => this.onChange(e)}></input>
                     </div>
                     <div className="buynow-button">
                         <span>Buynow Option: </span>

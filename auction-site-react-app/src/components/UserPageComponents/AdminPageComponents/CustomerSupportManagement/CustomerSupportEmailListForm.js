@@ -34,7 +34,7 @@ class CustomerSupportEmailListForm extends Component {
             (result) => {
                 this.setState({
                     emailFetchStatus: "success",
-                    emailList: result.emailList
+                    emailList: result.email_list
                 })
             },
             (error) => {
